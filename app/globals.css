@@ -1,0 +1,15 @@
+@import 'tailwindcss';
+
+body {
+  background-color: #FFFBF5;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+section {
+  height: 100vh;
+}
+
+footer {
+  height: 25vh;
+}
