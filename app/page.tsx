@@ -6,10 +6,8 @@ import Footer from './ui/sections/footer';
 
 export default function Home() {
 
-
-
   return (
-    <div>
+    <div className='  mx-auto'>
       <Hero />
       <AboutUs />
       <ItemsList />

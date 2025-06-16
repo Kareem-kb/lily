@@ -1,15 +1,48 @@
+'use client';
 import Image from 'next/image';
-
+import gsap from 'gsap';
+import { SplitText } from 'gsap/SplitText';
+import { useGSAP } from '@gsap/react';
 export default function AboutUs() {
+  gsap.registerPlugin(SplitText);
+
+  useGSAP(() => {
+    // Split and animate subtitle (starts after title animation)
+    SplitText.create('.about-text', {
+      type: 'lines,words',
+      linesClass: 'hero-subtitle-line',
+      mask: 'words',
+      onSplit(self) {
+        const tween = gsap.from(self.lines, {
+          yPercent: 100,
+          opacity: 0,
+          stagger: 0.15,
+          duration: 0.7,
+          ease: 'power2.out',
+        });
+        // Start after title animation (e.g., after 1.5s)
+        return tween;
+      },
+    });
+  });
   return (
     <section className="Sabout border-2 border-red-300">
       <div className="flex h-full flex-row">
-        <div className="w-1/2">
-          <Image src="/logo.png" alt="About Us" width={500} height={500} />
+        <div className="w-1/2 ">
+          <div>
+            <Image
+              alt="Bakery Hero Image"
+              src="/lily-hero-img-2.jpg"
+              priority
+              width={200}
+              height={200}
+              quality={90}
+            />{' '}
+          </div>
         </div>
         <div className="flex w-1/2 flex-col justify-center">
           <h1 className="text-4xl font-bold">Our story</h1>
-          <p className="text-lg">
+          <p className="about-text text-lg">
             Six years ago, our founder started Lily Cake from her own kitchen
             table, driven by a simple belief: every celebration deserves a cake
             that&apos;s made with the same love you&apos;d give your own family.
