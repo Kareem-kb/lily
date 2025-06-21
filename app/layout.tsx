@@ -8,6 +8,7 @@ import {
   Noto_Kufi_Arabic,
 } from 'next/font/google';
 import './globals.css';
+import NavBar from './ui/navBar';
 
 // English fonts
 const playfair_Display = Playfair_Display({
@@ -63,6 +64,7 @@ export default function RootLayout({
       <body
         className={`${playfair_Display.variable} ${quattrocento.variable} ${manrope.variable} bg-light antialiased ${cairo.variable} ${markazi_Text.variable} ${noto_Kufi_Arabic.variable}`}
       >
+        <NavBar />
         {children}
       </body>
     </html>

@@ -1,10 +1,10 @@
 'use client';
-import Image from 'next/image';
 import gsap from 'gsap';
 import { SplitText } from 'gsap/SplitText';
+import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin';
 import { useGSAP } from '@gsap/react';
 export default function AboutUs() {
-  gsap.registerPlugin(SplitText);
+  gsap.registerPlugin(SplitText, DrawSVGPlugin);
 
   useGSAP(() => {
     // Split and animate subtitle (starts after title animation)
@@ -24,20 +24,15 @@ export default function AboutUs() {
         return tween;
       },
     });
+
+
   });
   return (
     <section className="Sabout border-2 border-red-300">
       <div className="flex h-full flex-row">
-        <div className="w-1/2 ">
+        <div className="w-1/2">
           <div>
-            <Image
-              alt="Bakery Hero Image"
-              src="/lily-hero-img-2.jpg"
-              priority
-              width={200}
-              height={200}
-              quality={90}
-            />{' '}
+         
           </div>
         </div>
         <div className="flex w-1/2 flex-col justify-center">
