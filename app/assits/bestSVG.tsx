@@ -237,9 +237,10 @@ export const BestGraph = (props: React.SVGProps<SVGSVGElement>) => {
       // 3️⃣ tween all paths in this group
       const groupTL = gsap.from(paths, {
         drawSVG: 0,
-        duration: 1,
-        stagger: 0.5, // one after another
-        ease: 'power1.inOut',
+        duration: 0.5,
+        stagger: 0.2, // one after another
+        ease: 'power1.out',
+        delay: 0.4
       });
 
       master.add(groupTL); // 4️⃣ queue it
@@ -247,23 +248,23 @@ export const BestGraph = (props: React.SVGProps<SVGSVGElement>) => {
   }, []);
 
   return (
-    <svg id="bestSVG" viewBox="0 0 380.84 42.05" {...props}>
+    <svg id="bestSVG" viewBox="0 0 380.84 50.05" {...props}>
       {/* Best */}
       {/* B */}
       <g>
-        <path
-          d="M.66,40.28c.85.09,1.59-.35,2.4-.49,2.66-.48,5.31-.93,7.83-2.09,1.39-.64,2.87-1.12,4.3-1.72,3.17-1.34,6.26-2.82,9.25-4.55,2.63-1.52,4.99-3.43,7.52-5.1,1.99-1.31,3.69-3,4.7-5.25.5-1.11.28-2.14-.5-2.99-.82-.89-1.99-1.27-3.11-1.53-.99-.23-3.1-.41-3.8-.48-.45-.05-6.96-.5-6.96-.5l5.2-1.38c.32-.14,3.32-.96,4.48-1.52,3-1.43,5.94-2.97,8.63-4.93,1.22-.89,2.21-2.03,3.03-3.34.97-1.56-.56-4.25-2.54-4.36-3.87-.22-7.64.35-11.4,1.11-3.51.71-7,1.49-10.31,2.89-2.44,1.03-5.04,1.72-7.21,3.35-1.2.9-2.36,1.8-2.4,3.48-.03,1.26.37,2.39.96,3.48"
+        <line
+          x1="17.09"
+          y1="8.04"
+          x2=".13"
+          y2="38.65"
           fill="none"
           stroke="#c8a39e"
           strokeWidth="3"
           className="my-text-path"
           strokeLinecap="round"
         />
-        <line
-          x1="17.09"
-          y1="8.04"
-          x2=".13"
-          y2="38.65"
+        <path
+          d="M.66,40.28c.85.09,1.59-.35,2.4-.49,2.66-.48,5.31-.93,7.83-2.09,1.39-.64,2.87-1.12,4.3-1.72,3.17-1.34,6.26-2.82,9.25-4.55,2.63-1.52,4.99-3.43,7.52-5.1,1.99-1.31,3.69-3,4.7-5.25.5-1.11.28-2.14-.5-2.99-.82-.89-1.99-1.27-3.11-1.53-.99-.23-3.1-.41-3.8-.48-.45-.05-6.96-.5-6.96-.5l5.2-1.38c.32-.14,3.32-.96,4.48-1.52,3-1.43,5.94-2.97,8.63-4.93,1.22-.89,2.21-2.03,3.03-3.34.97-1.56-.56-4.25-2.54-4.36-3.87-.22-7.64.35-11.4,1.11-3.51.71-7,1.49-10.31,2.89-2.44,1.03-5.04,1.72-7.21,3.35-1.2.9-2.36,1.8-2.4,3.48-.03,1.26.37,2.39.96,3.48"
           fill="none"
           stroke="#c8a39e"
           strokeWidth="3"
@@ -310,14 +311,14 @@ export const BestGraph = (props: React.SVGProps<SVGSVGElement>) => {
           className="my-text-path"
           strokeLinecap="round"
         />
-              <path
-        d="M320.45,15.65c-.8.92-1.16,1.39-1.16,1.39"
-        fill="none"
-        stroke="#c8a39e"
-        strokeWidth="3"
-        className="my-text-path"
-        strokeLinecap="round"
-      />
+        <path
+          d="M320.45,15.65c-.8.92-1.16,1.39-1.16,1.39"
+          fill="none"
+          stroke="#c8a39e"
+          strokeWidth="3"
+          className="my-text-path"
+          strokeLinecap="round"
+        />
       </g>
     </svg>
   );

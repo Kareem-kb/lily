@@ -39,9 +39,9 @@ export default function NavBar() {
 
   return (
     <nav
-      className={`fixed inset-x-0 top-0 z-50 bg-transparent py-2 transition-transform duration-300 ease-in-out ${isScrolled ? '-translate-y-full' : 'translate-y-0'} `}
+      className={`add max-w-6xlinset-x-0 fixed top-0 bg-transparent py-2 transition-transform duration-300 ease-in-out ${isScrolled ? '-translate-y-full' : 'translate-y-0'} `}
     >
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto px-4 sm:px-6 lg:px-6">
         <div className="flex h-16 justify-between">
           <div className="navLogo flex items-center">
             <Link href="/" className="flex h-full items-center drop-shadow-2xl">
@@ -55,7 +55,7 @@ export default function NavBar() {
               />
             </Link>
           </div>
-          <div className="navItems flex items-center gap-3">
+          {/* <div className="navItems flex items-center gap-3">
             <Link href="/">
               <svg
                 width="20px"
@@ -102,7 +102,7 @@ export default function NavBar() {
                 </g>
               </svg>{' '}
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </nav>
