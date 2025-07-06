@@ -31,26 +31,26 @@ export default function AboutUs() {
     // Add animations to timeline (they play in sequence)
     tl.from('.aboutImg', {
       clipPath: 'inset(50% 0% 50% 0%)',
-      duration: 1.5,
+      duration: 1.2,
       ease: 'power4.out',
     })
       .from(
         '.aboutSVG',
         {
           clipPath: 'inset(0% 100% 0% 0%)',
-          duration: 1.5,
+          duration: 0.5,
           ease: 'power4.out',
         },
-        '<0.6'
+        '<0.3'
       )
       .from(
         splitWords.words,
         {
           yPercent: 100,
           opacity: 0,
-          duration: 1,
+          duration: 0.4,
           ease: 'power4.out',
-          stagger: 0.2,
+          stagger: 0.1,
         },
         '<0.3'
       )
@@ -59,16 +59,28 @@ export default function AboutUs() {
         {
           yPercent: 100,
           opacity: 0,
-          duration: 1,
+          duration: 0.5,
           ease: 'power4.out',
-          stagger: 0.2,
+          stagger: 0.1,
         },
         '<0.3'
       );
+
+    gsap.to('.hero-section', {
+      opacity: 0,
+      scrollTrigger: {
+        trigger: '.about-section',
+        start: 'top 90%',
+        end: 'top 40%',
+        scrub: true,
+        toggleActions: 'play none none reverse',
+      },
+      ease: 'power1.out',
+    });
   });
 
   return (
-    <section className="panel about-section bg-white shadow-lg">
+    <div className="about-section bg-white pb-24">
       <div className="flex h-full flex-col items-center justify-center md:flex-row">
         <div className="flex w-full items-center justify-center overflow-hidden p-4 md:w-1/2">
           <div className="relative aspect-[5/4] h-[400px] w-full">
@@ -111,6 +123,6 @@ export default function AboutUs() {
           </p>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

@@ -10,7 +10,6 @@
 }
 
 body {
-  background-color: var(--color-bakery-background);
   margin: 0;
   padding: 0;
   font-family: var(--font-nunito_Sans), sans-serif;
@@ -18,9 +17,6 @@ body {
 }
 
 section {
-  height: 100vh;
-  margin: auto 0;
-  padding: 0 1rem;
   position: relative;
 }
 /* 1. fluid heading */
@@ -42,7 +38,9 @@ p {
   max-width: 65ch; /* keeps lines readable            */
   hyphens: auto; /* optional—breaks long words nicely*/
 }
-
+svg {
+  fill: none;
+}
 button {
   font: 600 clamp(0.9rem, 2.5vw, 1rem) / 1.4 var(--font-manrope, sans-serif);
   padding: 0.55rem 1.25rem;

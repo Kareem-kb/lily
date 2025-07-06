@@ -1,10 +1,10 @@
 'use client';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import { MasterTL } from '@/app/assits/masterTL';
+import { masterTimeline } from '@/app/lib/gsap/animations/master-timeline';
 import Image from 'next/image';
 
-export default function HomeRevel() {
+export default function HomeReveal() {
   useGSAP(() => {
     // build a local timeline so we can clean it easily if the component unmounts
     const tl = gsap.timeline({ id: 'reveal' });
@@ -26,7 +26,7 @@ export default function HomeRevel() {
     );
 
     /* inject the child timeline at the *beginning* of MasterTL */
-    MasterTL.add(tl, 0).addLabel('revealDone');
+    masterTimeline.add(tl, 0).addLabel('revealDone');
   }, []);
 
   return (
