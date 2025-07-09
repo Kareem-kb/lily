@@ -1,17 +1,54 @@
+import Link from 'next/link';
+import Image from 'next/image';
+
 export default function Footer() {
   return (
-    <footer className="bg-green-300 p-4 flex flex-col md:flex-row justify-between items-center">
-      <div className="mb-2 md:mb-0">
-        <span className="font-bold">Lily App</span> &copy; 2025
+    <footer className="bg-bakery-primary text-bakery-background flex flex-col items-center justify-between pt-4">
+      <div className="mb-2 flex space-x-8 p-2">
+        <div className="mb-1 font-semibold">Social Media</div>
+        <div className="flex space-x-4">
+          <Link
+            href="https://instagram.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+          >
+            <Image
+              src="/instagram-icon.svg"
+              alt="Instagram Icon"
+              width={25}
+              height={25}
+            />
+          </Link>
+          <Link
+            href="https://tiktok.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="TikTok"
+          >
+            <Image
+              src="/tiktok-icon.svg"
+              alt="TikTok Icon"
+              width={25}
+              height={25}
+            />
+          </Link>
+          <a
+            href="https://wa.me/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="WhatsApp"
+          >
+            <Image
+              src="/whatsapp-icon.svg"
+              alt="WhatsApp Icon"
+              width={25}
+              height={25}
+            />
+          </a>
+        </div>
       </div>
-      <nav className="flex space-x-4">
-        <a href="#" className="hover:underline">About</a>
-        <a href="#" className="hover:underline">Contact</a>
-        <a href="#" className="hover:underline">Privacy Policy</a>
-      </nav>
-      <div className="text-sm text-gray-700 mt-2 md:mt-0">
-        Email: info@lilyapp.com
-      </div>
+      <div className="text-sm">&copy; 2025 Lily App. All rights reserved.</div>
     </footer>
   );
 }

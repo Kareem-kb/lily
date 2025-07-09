@@ -2,128 +2,125 @@
 
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import Image from 'next/image';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Image from 'next/image';
+import { useRef } from 'react';
+
 gsap.registerPlugin(ScrollTrigger);
 
 export default function ProcessList() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const iconsRef = useRef<HTMLDivElement>(null);
+  const descriptionsRef = useRef<HTMLUListElement>(null);
+
   const theList = [
-    { step: '1', description: 'Choose your cake', icon: '/Cake-Icons.svg' },
-    { step: '2', description: 'Pick your date', icon: '/Calendar-Icon.svg' },
-    { step: '3', description: 'Book & pay deposit', icon: '/Deposit-Icon.svg' },
+    { step: '01', description: 'Choose your cake', icon: '/Cake-Icons.svg' },
+    { step: '02', description: 'Pick your date', icon: '/Calendar-Icon.svg' },
     {
-      step: '4',
+      step: '03',
+      description: 'Book & pay deposit',
+      icon: '/Deposit-Icon.svg',
+    },
+    {
+      step: '04',
       description: 'Get a confirmation e-mail',
       icon: '/Email-Icon.svg',
     },
     {
-      step: '5',
+      step: '05',
       description: 'Wait for your delivery',
       icon: '/Delivery-Icon.svg',
     },
   ];
 
   useGSAP(() => {
-    // Example: animate each step in as it enters viewport
-    gsap.utils.toArray('.process-step').forEach((el, i) => {
-      gsap.fromTo(
-        el as HTMLElement,
-        { y: 40, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.7,
-          delay: i * 0.1,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: el as HTMLElement,
-            start: 'top 85%',
-            toggleActions: 'play none none reverse',
-          },
-        }
-      );
-    });
-    gsap.to('.about-section', {
-      opacity: 0,
-      scrollTrigger: {
-        trigger: '.process-list',
-        start: 'top 80%',
-        end: 'top center',
-        scrub: true,
-        toggleActions: 'play none none reverse',
-      },
-      ease: 'power1.out',
+    const box = containerRef.current; // the pinned viewport
+    const column = descriptionsRef.current; // the <ul> we’ll slide
+    if (!box || !column) return;
+
+    const steps = theList.length - 1; // e.g. 4 when you have 5 items
+    const setY = gsap.quickSetter(column, 'yPercent'); // 0-allocation setter
+
+    ScrollTrigger.create({
+      trigger: box,
+      start: 'top top',
+      end: `+=${steps * 100}`, // 100 px per step
+      pin: true,
+      scrub: 1,
+      snap: 1 / steps, // 0 → 0.25 → 0.5 → …
+      onUpdate: (self) => setY(-self.progress * steps * 100),
     });
   }, []);
 
   return (
-    <div className="process-list flex items-center justify-center py-10 bg-white">
-      <div className="flex w-full max-w-6xl flex-col gap-8 md:flex-row">
-        {/* Left: SVG Path + Icons */}
-        <div className="relative flex min-h-[32rem] flex-1 items-center justify-center">
-          <svg
-            viewBox="0 -1 270 360"
-            className="h-[28rem] w-72 md:h-[32rem] md:w-96 lg:h-[36rem] lg:w-[28rem]"
-            preserveAspectRatio="xMidYMid meet"
-          >
-            <path
-              d="M0,1.08C5.49.37,11.09,0,16.77,0h106.64c71.83,0,130.59,58.77,130.59,130.59v72.73c0,71.83-58.77,130.59-130.59,130.59H16.77c-5.05,0-10.04-.29-14.94-.86"
-              stroke="#000"
-              strokeWidth="2"
-              fill="none"
-            />
-          </svg>
-          {/* Step Icons, positioned along the path */}
-          {theList.map((item, index) => (
-            <div
-              key={item.step}
-              className={`absolute left-1/2 -translate-x-1/2`}
-              style={{
-                top: `${10 + index * 60}px`, // adjust spacing as needed
-                zIndex: 10,
-              }}
-            >
-              <Image
-                className="process-step rounded-full shadow-lg"
-                src={item.icon}
-                alt={item.description}
-                width={64}
-                height={64}
-              />
-            </div>
-          ))}
-        </div>
-
-        {/* Right: Steps List */}
-        <div className="flex flex-1 flex-col items-center justify-center gap-8">
-          <h2 className="text-bakery-primary flex items-center gap-2 text-2xl font-bold">
+    <section
+      ref={containerRef}
+      className="process-list min-h-screen bg-white py-20"
+    >
+      <div className="container mx-auto px-4">
+        <div className="text-lift mb-16">
+          <h2 className="inline-flex flex-col">
             How it works
-            <svg viewBox="0 0 100 2" className="aboutSVG h-2 w-24">
+            <svg viewBox="0 0 100 2" className="w-fit">
               <line
                 x1="0"
                 y1="1"
                 x2="100"
                 y2="1"
-                stroke="#000"
+                stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="round"
               />
             </svg>
           </h2>
-          <ol className="w-full max-w-md space-y-6">
-            {theList.map((item) => (
-              <li key={item.step} className="flex items-center gap-4">
-                <span className="text-bakery-primary text-lg font-bold">
-                  {item.step}.
-                </span>
-                <span className="process-step text-lg text-gray-700">
-                  {item.description}
-                </span>
-              </li>
-            ))}
-          </ol>
+        </div>
+
+        <div className="mx-auto flex flex-col justify-center gap-12 md:flex-row lg:gap-16">
+          {/* Icons Section */}
+          <div className="relative h-[400px] flex-1/2 overflow-hidden lg:h-[500px]">
+            {' '}
+            {/* Match item heights */}
+            <div ref={iconsRef} className="flex flex-col">
+              {theList.map((item) => (
+                <div
+                  key={item.step}
+                  className="relative flex h-[400px] w-full justify-center lg:h-[500px]"
+                >
+                  <div className="relative aspect-square w-full max-w-sm">
+                    <Image
+                      src={item.icon}
+                      alt={item.description}
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 90vw, 40vw"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Descriptions Section */}
+          <div className="flex flex-1/2 items-center justify-center">
+            <div /* 100 px = viewport for one line */
+              ref={containerRef}
+              className="relative h-[100px] overflow-hidden"
+            >
+              <ul /* holds the stack we’ll slide upward */
+                ref={descriptionsRef}
+                className="flex flex-col" /* natural flow, no absolute tricks */
+              >
+                {theList.map((item) => (
+                  <li key={item.step} className="flex h-[100px] flex-col">
+                    <span className="text-bakery-primary">{item.step}</span>
+                    <h2>{item.description}</h2>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

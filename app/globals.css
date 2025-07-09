@@ -30,7 +30,7 @@ h2 {
   font: 600 clamp(1.4rem, 3vw, 2.2rem) / 1.3 var(--font-manrope, sans-serif);
 }
 h3 {
-  font: 500 clamp(1.1rem, 2.5vw, 1.8rem) / 1.4 var(--font-manrope, sans-serif);
+  font: 500 clamp(1.1rem, 2.5vw, 1.7rem) / 1.4 var(--font-manrope, sans-serif);
 }
 /* 3. paragraph */
 p {
@@ -38,19 +38,13 @@ p {
   max-width: 65ch; /* keeps lines readable            */
   hyphens: auto; /* optional—breaks long words nicely*/
 }
-svg {
-  fill: none;
-}
+
 button {
   font: 600 clamp(0.9rem, 2.5vw, 1rem) / 1.4 var(--font-manrope, sans-serif);
   padding: 0.55rem 1.25rem;
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
-}
-
-footer {
-  height: 25vh;
 }
 
 #revelCover {

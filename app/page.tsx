@@ -2,7 +2,7 @@
 import Hero from './components/sections/hero';
 import AboutUs from './components/sections/about-us';
 import Navbar from './components/navbar/navbar';
-import ItemsList from './components/sections/items-list';
+// import ItemsList from './components/sections/items-list';
 import HomeReveal from './lib/gsap/animations/home-reveal';
 import ProcessList from './components/sections/process-list';
 import Footer from './components/sections/footer';
@@ -28,7 +28,7 @@ export default function Home() {
       <section className="panel">
         <AboutUs />
         <ProcessList />
-        <ItemsList />
+        {/* <ItemsList /> */}
         <Footer />
       </section>
     </main>
