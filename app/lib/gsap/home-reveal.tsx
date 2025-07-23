@@ -1,7 +1,7 @@
 'use client';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import { masterTimeline } from '@/app/lib/gsap/animations/master-timeline';
+import { masterTimeline } from '@/app/lib/gsap/master-timeline';
 import Image from 'next/image';
 
 export default function HomeReveal() {
@@ -27,6 +27,13 @@ export default function HomeReveal() {
 
     /* inject the child timeline at the *beginning* of MasterTL */
     masterTimeline.add(tl, 0).addLabel('revealDone');
+
+    masterTimeline.call(() => {
+      const revelElement = document.getElementById('revelCover');
+      if (revelElement) {
+        revelElement.remove();
+      }
+    }, []);
   }, []);
 
   return (

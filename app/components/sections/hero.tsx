@@ -3,7 +3,7 @@ import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { SplitText } from 'gsap/SplitText';
 import Image from 'next/image';
-import { masterTimeline } from '@/app/lib/gsap/animations/master-timeline';
+import { masterTimeline } from '@/app/lib/gsap/master-timeline';
 
 gsap.registerPlugin(SplitText);
 
@@ -72,8 +72,10 @@ export default function Hero() {
 
   return (
     <div className="bg-bakery-background h-screen hero-section">
-      <div className="mx-auto flex h-full w-full flex-col md:flex-row">
-        <div className="flex max-w-xl basis-1/2 flex-col justify-center gap-2">
+      <div
+        className="mx-auto flex h-full w-full max-w-7xl flex-col px-4 sm:px-6 lg:px-8 md:flex-row"
+      >
+        <div className="flex basis-1/2 flex-col justify-center gap-2">
           <h1 className="hero-title">
             Cakes That Make Moments Unforgettable&nbsp;
             <span className="inline-block h-[1.1em] overflow-hidden align-baseline">

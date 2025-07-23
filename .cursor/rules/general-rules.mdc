@@ -1,0 +1,6 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+*Rule: PascalCase for components, kebab-case for files/folders, camelCase for variables.*

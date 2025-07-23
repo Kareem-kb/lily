@@ -3,120 +3,94 @@ import gsap from 'gsap';
 import Image from 'next/image';
 import { useRef } from 'react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { SplitText } from 'gsap/SplitText';
 import { useGSAP } from '@gsap/react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function AboutUs() {
   const aboutSectionRef = useRef<HTMLDivElement>(null);
-  useGSAP(() => {
-    // Create timeline with ScrollTrigger
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: aboutSectionRef.current, // One trigger for everything
-        start: 'top top', // Start when top of section is 80% from top
-        toggleActions: 'play none none reverse',
-      },
-    });
 
-    // Split text setup
-    const splitWords = new SplitText('.aboutTital', {
-      type: 'words',
-      mask: 'words',
-    });
-    const splitText = new SplitText('.about-text', {
-      type: 'lines',
-      mask: 'lines',
-    });
+  useGSAP(
+    () => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: aboutSectionRef.current,
+          start: 'top 60%',
+          toggleActions: 'play none none none',
+        },
+      });
 
-    // Add animations to timeline (they play in sequence)
-    tl.from('.aboutImg', {
-      clipPath: 'inset(50% 0% 50% 0%)',
-      duration: 1.2,
-      ease: 'power4.out',
-    })
-      .from(
-        '.aboutSVG',
-        {
-          clipPath: 'inset(0% 100% 0% 0%)',
-          duration: 0.5,
-          ease: 'power4.out',
-        },
-        '<0.3'
-      )
-      .from(
-        splitWords.words,
-        {
-          yPercent: 100,
-          opacity: 0,
-          duration: 0.4,
-          ease: 'power4.out',
-          stagger: 0.1,
-        },
-        '<0.3'
-      )
-      .from(
-        splitText.lines,
-        {
-          yPercent: 100,
-          opacity: 0,
-          duration: 0.5,
-          ease: 'power4.out',
-          stagger: 0.1,
-        },
-        '<0.3'
-      );
-
-    gsap.to('.hero-section', {
-      opacity: 0,
-      scrollTrigger: {
-        trigger: aboutSectionRef.current,
-        start: 'top 90%',
-        end: 'top 40%',
-        scrub: true,
-        toggleActions: 'play none none reverse',
-      },
-      ease: 'power1.out',
-    });
-  });
+      tl.from('.about-title-reveal', {
+        yPercent: 110,
+        duration: 0.6,
+        ease: 'power4.out',
+      })
+        .from(
+          '.about-img-reveal',
+          {
+            scale: 1.1,
+            clipPath: 'inset(0% 100% 0% 0%)',
+            duration: 1,
+            ease: 'power4.out',
+          },
+          '<'
+        )
+        .from(
+          ['.about-text-reveal', '.about-stat-reveal'],
+          {
+            opacity: 0,
+            y: 30,
+            stagger: 0.1,
+            duration: 0.6,
+            ease: 'power4.out',
+          },
+          '-=0.7'
+        );
+    },
+    { scope: aboutSectionRef }
+  );
 
   return (
-    <section ref={aboutSectionRef} className="bg-white py-12">
-      <div className="flex h-full flex-col items-center justify-center md:flex-row">
-        <div className="flex w-full flex-col justify-center space-y-8 p-6 md:w-1/2">
-          <h2 className="aboutTital w-fit">
-            Our story{' '}
-            <svg viewBox="0 0 100 2" className="aboutSVG">
-              <line
-                x1="0"
-                y1="1"
-                x2="100"
-                y2="1"
-                stroke="#000"
-                strokeWidth="2"
-                strokeLinecap="round"
+    <section ref={aboutSectionRef} className="about-section py-32">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-16 px-4 sm:px-6 md:grid-cols-12 lg:gap-24 lg:px-8">
+        {/* Image Column */}
+        <div className="md:col-span-5">
+          <div className="about-img-reveal relative aspect-[4/5] w-full max-w-sm rounded-lg border border-gray-200 p-2">
+            <div className="relative h-full w-full">
+              <Image
+                src="/aboutUs-img-1.jpg"
+                alt="A picture of a lily cake"
+                fill
+                sizes="(max-width: 768px) 90vw, 35vw"
+                className="rounded-md object-cover"
+                priority
               />
-            </svg>
-          </h2>
-          <p className="about-text">
+            </div>
+          </div>
+        </div>
+
+        {/* Text Column */}
+        <div className="flex flex-col justify-center md:col-span-7">
+          <div className="overflow-hidden pb-4">
+            <h2 className="about-title-reveal text-3xl font-semibold text-gray-900">
+              Our story
+            </h2>
+          </div>
+          <p className="about-text-reveal text-base leading-relaxed text-gray-700">
             Born in a cozy home kitchen, Lily&#39;s cakes began as a hobby and
             quickly became a way to make life&#39;s celebrations sweeter. Every
             order is handcrafted with care and made to reflect the moment from
             weddings to birthdays all baked with a personal, homemade touch.
           </p>
-        </div>
-        <div className="flex w-full items-center justify-center overflow-hidden p-4 md:w-1/2">
-          <div className="relative aspect-[5/4] h-[400px] w-full">
-            {/* Added relative and height */}
-            <Image
-              src="/aboutUs-img.jpg"
-              alt="About Us Image"
-              fill
-              sizes="(max-width: 768px) 90vw, 45vw"
-              className="aboutImg rounded-lg object-cover shadow-lg"
-              priority
-            />
+          <div className="grid grid-cols-2 gap-8 pt-12">
+            <div className="about-stat-reveal">
+              <span className="text-4xl font-bold text-gray-900">100+</span>
+              <p className="mt-1 text-sm text-gray-500">Orders Delivered</p>
+            </div>
+            <div className="about-stat-reveal">
+              <span className="text-4xl font-bold text-gray-900">6+</span>
+              <p className="mt-1 text-sm text-gray-500">Years of Experience</p>
+            </div>
           </div>
         </div>
       </div>

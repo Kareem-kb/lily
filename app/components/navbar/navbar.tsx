@@ -16,13 +16,13 @@ export default function NavBar() {
       ease: 'power2.out',
       scale: 0.8, // scale down slightly
     });
-    gsap.from('.navItems', {
-      opacity: 0.5,
-      xPercent: 120, // slide in from right
-      duration: 1,
-      ease: 'power2.out',
-      scale: 0.8, // scale down slightly
-    });
+    // gsap.from('.navItems', {
+    //   opacity: 0.5,
+    //   xPercent: 120, // slide in from right
+    //   duration: 1,
+    //   ease: 'power2.out',
+    //   scale: 0.8, // scale down slightly
+    // });
   });
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function NavBar() {
 
   return (
     <nav
-      className={`add max-w-6xlinset-x-0 fixed top-0 bg-transparent py-2 transition-transform duration-300 ease-in-out ${isScrolled ? '-translate-y-full' : 'translate-y-0'} `}
+      className={`fixed inset-x-0 top-0 z-50 bg-transparent py-2 transition-transform duration-300 ease-in-out ${isScrolled ? '-translate-y-full' : 'translate-y-0'}`}
     >
       <div className="mx-auto px-4 sm:px-6 lg:px-6">
         <div className="flex h-16 justify-between">
