@@ -1,287 +1,122 @@
 'use client';
-
-import { useState } from 'react';
-import {
-  FormSection,
-  InputField,
-  TextArea,
-  RadioGroup,
-  FileUpload,
-  DatePicker,
-} from '../forms/reusable-form-components';
-import {
-  tierNumberOptions,
-  tierTypeOptions,
-  flavourOptions,
-  frostingOptions,
-  calculateBasePrice,
-  calculateTotal,
-  getEstimatedSize,
-  isFieldComplete,
-  getFieldHelp,
-  HelpCard,
-  DesktopOrderSummary,
-  MobileOrderSummary,
-} from '../forms/cake-form';
+import { useRef, useActionState, useState } from 'react';
+import { cakeForm } from '@/app/actions/cake-form';
+import { useGSAP } from '@gsap/react';
+import { gsap } from 'gsap';
+import { Flip } from 'gsap/Flip';
+import { questionsList } from '@/app/components/forms/QuestionsList';
+gsap.registerPlugin(Flip);
 
 export default function ItemsList() {
-  const [tierType, setTierType] = useState('all-real');
-  const [tierNumber, setTierNumber] = useState('1');
-  const [flavour, setFlavour] = useState('chocolate');
-  const [frosting, setFrosting] = useState('buttercream');
-  const [occasion, setOccasion] = useState('');
-  const [eventDate] = useState('');
-  const [currentField, setCurrentField] = useState('occasion');
+  const [state, formAction, isPending] = useActionState(cakeForm, null);
+  const mainContainerRef = useRef<HTMLDivElement>(null);
+  const formWrapperRef = useRef<HTMLDivElement>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Computed values
-  const formValues = {
-    occasion,
-    eventDate,
-    tierNumber,
-    tierType,
-    flavour,
-    frosting,
+  // This is the only helper function you need.
+  // It matches the simple example you liked.
+  const gotoStep = (next: number) => {
+    // 1. Get the initial state
+    const state = Flip.getState('.step-animation');
+
+    // 2. Change the classes
+    setCurrentIndex(next);
+
+    // 3. Animate to the new state
+    requestAnimationFrame(() => {
+      Flip.from(state, {
+        duration: 1,
+        ease: 'power2.inOut',
+        // THIS IS THE FIX:
+        // Tell Flip to only animate these specific properties
+        props: 'grid-row-start, margin-bottom, gap',
+      });
+    });
   };
-  const formState = { tierNumber, tierType, flavour, frosting };
-  const helpContent = getFieldHelp(currentField, formState);
-  const basePrice = calculateBasePrice(tierNumber);
-  const total = calculateTotal(tierNumber, tierType);
-  const estimatedSize = getEstimatedSize(tierNumber);
+
+  useGSAP(() => {
+    gsap.to(mainContainerRef.current, {
+      scrollTrigger: {
+        trigger: mainContainerRef.current,
+        start: 'top top',
+        pin: true,
+        end: '+=200',
+      },
+    });
+  });
 
   return (
-    <div className="w-full bg-white p-4 py-16 sm:p-8">
-      <div className="mx-auto max-w-7xl">
-        {/* Top Section */}
-        <div className="mb-12 w-full text-center">
-          <h2 className="text-3xl font-bold text-gray-800">
-            Design Your Perfect Cake
-          </h2>
-          <p className="mt-2 text-gray-600">
-            Each creation is a unique piece of art, made just for you.
-          </p>
-        </div>
-
-        {/* Mobile: Sticky Help Card at Top */}
-        <div className="lg:hidden">
-          <div className="sticky top-0 z-10 mb-6 bg-white pb-4">
-            <HelpCard
-              title={helpContent.title}
-              content={helpContent.content}
-              mobile
-            />
-          </div>
-        </div>
-
-        {/* Two Column Layout (Desktop) */}
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
-          {/* Left Column - Field Help & Order Summary (Desktop Only) */}
-          <div className="hidden lg:flex lg:justify-start">
-            <div className="sticky top-8 w-full max-w-sm space-y-6">
-              <HelpCard
-                title={helpContent.title}
-                content={helpContent.content}
-              />
-              <DesktopOrderSummary
-                tierNumber={tierNumber}
-                tierType={tierType}
-                flavour={flavour}
-                frosting={frosting}
-                basePrice={basePrice}
-                total={total}
-                estimatedSize={estimatedSize}
-              />
-            </div>
-          </div>
-
-          {/* Right Column - The Form */}
-          <div>
-            <form className="space-y-10">
-              <FormSection title="Event Details">
-                <InputField
-                  label="Occasion"
-                  name="occasion"
-                  type="text"
-                  placeholder="e.g., Birthday"
-                  value={occasion}
-                  onChange={(e) => {
-                    setOccasion(e.target.value);
-                    setCurrentField('occasion');
-                  }}
-                  onFocus={() => setCurrentField('occasion')}
-                />
-                <div
-                  className={
-                    !isFieldComplete('occasion', formValues)
-                      ? 'pointer-events-none opacity-50'
-                      : ''
-                  }
-                  onClick={() => setCurrentField('eventDate')}
-                >
-                  <DatePicker label="Event Date" name="date" />
-                </div>
-              </FormSection>
-
-              <FormSection title="Cake Structure">
-                <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-                  <div
-                    className={
-                      !isFieldComplete('eventDate', formValues)
-                        ? 'pointer-events-none opacity-50'
-                        : ''
-                    }
-                    onClick={() => setCurrentField('tierNumber')}
-                  >
-                    <RadioGroup
-                      label="Number of cake tiers"
-                      name="tierNumber"
-                      options={tierNumberOptions}
-                      value={tierNumber}
-                      onChange={(e) => {
-                        setTierNumber(e.target.value);
-                        setCurrentField('tierNumber');
-                      }}
-                    />
-                  </div>
-                  <div
-                    className={
-                      !isFieldComplete('tierNumber', formValues)
-                        ? 'pointer-events-none opacity-50'
-                        : ''
-                    }
-                    onClick={() => setCurrentField('tierType')}
-                  >
-                    <RadioGroup
-                      label="Real vs. dummy tiers"
-                      name="tierType"
-                      options={tierTypeOptions}
-                      value={tierType}
-                      onChange={(e) => {
-                        setTierType(e.target.value);
-                        setCurrentField('tierType');
-                      }}
-                    />
-                  </div>
-                </div>
-                {tierType === 'some-dummy' && (
-                  <InputField
-                    label="Which tiers should be real?"
-                    name="dummy_tier_description"
-                    placeholder="e.g., 'Top and bottom tiers real, middle dummy'"
-                  />
-                )}
-              </FormSection>
-
-              <FormSection title="Design & Flavour">
-                <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-                  <div
-                    className={
-                      !isFieldComplete('tierType', formValues)
-                        ? 'pointer-events-none opacity-50'
-                        : ''
-                    }
-                    onClick={() => setCurrentField('flavour')}
-                  >
-                    <RadioGroup
-                      label="Single cake flavour"
-                      name="flavour"
-                      options={flavourOptions}
-                      value={flavour}
-                      onChange={(e) => {
-                        setFlavour(e.target.value);
-                        setCurrentField('flavour');
-                      }}
-                    />
-                  </div>
-                  <div
-                    className={
-                      !isFieldComplete('flavour', formValues)
-                        ? 'pointer-events-none opacity-50'
-                        : ''
-                    }
-                    onClick={() => setCurrentField('frosting')}
-                  >
-                    <RadioGroup
-                      label="Frosting Type"
-                      name="frosting"
-                      options={frostingOptions}
-                      value={frosting}
-                      onChange={(e) => {
-                        setFrosting(e.target.value);
-                        setCurrentField('frosting');
-                      }}
-                    />
-                  </div>
-                </div>
-                <FileUpload label="Upload an inspiration photo" />
-                <TextArea
-                  label="Describe the style, colours and decorations you’d like"
-                  name="style_description"
-                  placeholder="e.g., 'Minimalist design with gold leaf and fresh flowers'"
-                  rows={4}
-                />
-                <InputField
-                  label="Message on the cake (optional)"
-                  name="cake_message"
-                  type="text"
-                  placeholder="e.g., 'Happy Birthday, Lily!'"
-                />
-                <TextArea
-                  label="Any allergies or dietary restrictions?"
-                  name="allergies"
-                  rows={3}
-                />
-              </FormSection>
-
-              <FormSection title="Contact & Delivery">
-                <InputField
-                  label="Delivery address"
-                  name="delivery_address"
-                  type="text"
-                  placeholder="Street, City, Postal Code"
-                />
-                <InputField
-                  label="Full Name"
-                  name="full-name"
-                  autoComplete="name"
-                />
-                <InputField
-                  label="Email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                />
-                <InputField
-                  label="Phone Number"
-                  name="phone"
-                  type="tel"
-                  autoComplete="tel"
-                  placeholder="+1 (555) 123-4567"
-                />
-              </FormSection>
-
-              {/* Mobile Order Summary - Before Submit */}
-              <div className="lg:hidden">
-                <MobileOrderSummary
-                  tierNumber={tierNumber}
-                  flavour={flavour}
-                  estimatedSize={estimatedSize}
-                  total={total}
-                />
-              </div>
-
-              {/* Submit Button */}
-              <div>
-                <button
-                  type="submit"
-                  className="w-full rounded-md border border-transparent bg-pink-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-pink-700 focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 focus:outline-none"
-                >
-                  Request Your Custom Cake
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
+    <section
+      className="flex h-screen flex-col items-center justify-center"
+      ref={mainContainerRef}
+    >
+      <div className="w-full max-w-4xl justify-end">
+        <span className="text-lg font-bold">Let&apos;s Customise you cake</span>
       </div>
-    </div>
+
+      <div className="flex h-[70vh] max-w-lg flex-col gap-6 p-4">
+        <form
+          action={formAction}
+          className="flex h-full w-full flex-col justify-end overflow-hidden rounded-lg shadow-[0px_4px_45px_9px_rgba(51,_65,_85,_0.12)]"
+        >
+          {/* --- THE SIMPLIFIED LOOP --- */}
+
+          <div
+            ref={formWrapperRef}
+            className="form-step-wrapper grid h-full grid-rows-[0_93%_auto_0] overflow-hidden p-4"
+          >
+            {questionsList.map(
+              ({ id, component: Component, ...props }, index) => (
+                <div
+                  key={id}
+                  className={`step-animation col-start-1 ${
+                    index === currentIndex
+                      ? 'pointer-events-auto row-start-2 self-start' // current card (visible top)
+                      : index === currentIndex + 1
+                        ? 'pointer-events-none row-start-3 self-start' // next card (visible bottom, controls offset via preview prop)
+                        : index < currentIndex
+                          ? 'pointer-events-none row-start-1 mb-10 self-end' // previous cards (hidden above)
+                          : 'pointer-events-none row-start-4 self-start' // future cards (hidden below)
+                  }`}
+                >
+                  <div className="flex w-full items-start gap-2">
+                    <span className="w-fit flex-shrink-0 rounded-full border-2 border-gray-300 px-2.5 py-1.5 text-sm font-bold text-gray-500">
+                      {id}.
+                    </span>
+                    <div className="flex-1">
+                      <Component
+                        {...(props as Record<string, unknown>)}
+                        preview={index === currentIndex + 1}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )
+            )}
+          </div>
+          <div className="relative z-10 flex w-full justify-between bg-white p-4 shadow-[0px_4px_45px_9px_rgba(51,_65,_85,_0.12)]">
+            <button
+              type="button"
+              className="rounded-md bg-gray-600 p-2 text-white disabled:bg-gray-300"
+              disabled={isPending || currentIndex === 0}
+              onClick={() => gotoStep(Math.max(currentIndex - 1, 0))}
+            >
+              Previous
+            </button>
+            <button
+              className="rounded-md bg-gray-600 p-2 text-white disabled:bg-gray-300"
+              type="button"
+              disabled={isPending || currentIndex === questionsList.length - 1}
+              onClick={() =>
+                gotoStep(Math.min(currentIndex + 1, questionsList.length - 1))
+              }
+            >
+              Next
+            </button>
+          </div>
+        </form>
+        {state && <p></p>}
+      </div>
+    </section>
   );
 }

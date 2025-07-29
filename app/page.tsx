@@ -15,10 +15,10 @@ export default function Home() {
   }, []);
 
   return (
-    <main>
+    <main >
       <Navbar />
       {/* Hero Section */}
-      <section className="panel">
+      <section className="panel ">
         <HomeReveal />
         <Hero />
       </section>

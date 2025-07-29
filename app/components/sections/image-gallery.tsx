@@ -170,8 +170,8 @@ export default function ImageGallery() {
         ))}
       </div>
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="gallery-button z-10 text-6xl font-bold text-white rounded-md p-4 opacity-0">
-          Customise your cake
+        <span className="gallery-button z-10 rounded-md p-4 text-6xl font-bold text-white opacity-0">
+          Each is a unique piece of art, made just for you.
         </span>
       </div>
     </section>
