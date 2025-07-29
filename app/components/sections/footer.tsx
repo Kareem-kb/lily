@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export default function Footer() {
   return (
-    <footer className="bg-bakery-primary text-bakery-background flex flex-col items-center justify-between pt-4">
+    <footer className="text-bakery-primary flex flex-col items-center justify-between pt-4 shadow-[0px_0px_10px_0px_rgba(0,_0,_0,_0.1)]">
       <div className="mb-2 flex space-x-8 p-2">
         <div className="mb-1 font-semibold">Social Media</div>
         <div className="flex space-x-4">

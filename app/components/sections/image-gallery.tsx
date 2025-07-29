@@ -77,102 +77,102 @@ const imageData = [
 export default function ImageGallery() {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(
-    () => {
-      const imageCells = gsap.utils.toArray<HTMLDivElement>('.image-cell');
-      const timeline = gsap.timeline({
+  useGSAP(() => {
+    const imageCells = gsap.utils.toArray<HTMLDivElement>('.image-cell');
+    const timeline = gsap
+      .timeline({
         scrollTrigger: {
           trigger: containerRef.current,
           start: 'top top',
-          end: '+=2000', // A longer scroll distance for a more graceful animation.
+          end: '+=1000', // A longer scroll distance for a more graceful animation.
           pin: true,
           scrub: 1, // Smoothly links the animation progress to the scrollbar.
         },
-      });
-
-      // --- TIMELINE START ---
-
-      // 1. Move all images to the center of the container.
-      // This happens at the very beginning of the timeline (position `0`).
-      imageCells.forEach((cell, index) => {
-        const containerRect = containerRef.current!.getBoundingClientRect();
-        const cellRect = cell.getBoundingClientRect();
-
-        const x =
-          containerRect.width / 2 -
-          (cellRect.left - containerRect.left) -
-          cellRect.width / 2;
-        const y =
-          containerRect.height / 2 -
-          (cellRect.top - containerRect.top) -
-          cellRect.height / 2;
-
-        // Check if this is the last image to apply a special animation.
-        if (index === imageCells.length - 1) {
-          timeline.to(cell, { x, y, scale: 1.2, ease: 'power2.inOut' }, 0);
-          // Find the overlay and animate its background color to create the mask effect.
-          const overlay = cell.querySelector('.image-overlay');
-          if (overlay) {
-            timeline.to(overlay, { ease: 'power2.inOut' }, 0);
-          }
-        } else {
-          // Apply the standard animation to all other images.
-          timeline.to(cell, { x, y, scale: 1.1, ease: 'power2.inOut' }, 0);
-        }
-      });
-
-      // 2. Change the background color.
-      // This also starts at the beginning of the timeline (position `0`).
-      timeline.to(
-        containerRef.current,
-        { backgroundColor: '#3b3b3b', ease: 'power2.inOut' },
+      })
+      .to(
+        '.fade-bg',
+        {
+          backgroundColor: '#aaaaaa',
+          ease: 'power2.inOut',
+        },
         0
+      )
+      .to(
+        '.gallery-text',
+        {
+          opacity: 1,
+          ease: 'power2.inOut',
+        },
+        '>-0.1'
       );
 
-      // 3. Create a label to mark the point where the button should appear.
-      // This label is placed halfway through the total duration of the image animations.
-      timeline.addLabel('buttonFadeIn', 0.5);
+    imageCells.forEach((cell, index) => {
+      const containerRect = containerRef.current!.getBoundingClientRect();
+      const cellRect = cell.getBoundingClientRect();
 
-      // 4. Fade in the button.
-      // The animation starts at the "buttonFadeIn" label we just created.
-      timeline.to(
-        '.gallery-button',
-        { opacity: 1, ease: 'power2.inOut' },
-        'buttonFadeIn'
-      );
-    },
-    { scope: containerRef }
-  );
+      const x =
+        containerRect.width / 2 -
+        (cellRect.left - containerRect.left) -
+        cellRect.width / 2;
+      const y =
+        containerRect.height / 2 -
+        (cellRect.top - containerRect.top) -
+        cellRect.height / 2;
+
+      // Check if this is the last image to apply a special animation.
+      if (index === imageCells.length - 1) {
+        timeline.to(cell, { x, y, scale: 1.2, ease: 'power2.inOut' }, 0);
+        // Find the overlay and animate its background color to create the mask effect.
+        const overlay = cell.querySelector('.image-overlay');
+        if (overlay) {
+          timeline.to(overlay, { ease: 'power2.inOut' }, 0);
+        }
+      } else {
+        // Apply the standard animation to all other images.
+        timeline.to(cell, { x, y, scale: 1.1, ease: 'power2.inOut' }, 0);
+      }
+    });
+  });
 
   return (
-    <section ref={containerRef} className="relative w-full overflow-hidden p-4">
-      <div className="mx-auto grid max-w-6xl grid-cols-4 gap-4 sm:grid-cols-3 md:grid-cols-[repeat(13,minmax(0,1fr))]">
-        {imageData.map((image, index) => (
-          <div key={index} className={`flex h-96 ${image.cellClasses}`}>
-            <div
-              className={`image-cell relative ${
-                image.imageClasses || 'w-full'
-              } aspect-[4/6]`}
-            >
-              <Image
-                src={image.src}
-                alt={image.alt}
-                fill
-                sizes="(min-width: 768px) 15vw, (min-width: 640px) 30vw, 50vw"
-                className="rounded-md object-cover"
-              />
-              {/* This overlay is only rendered for the last image. */}
-              {index === imageData.length - 1 && (
-                <div className="image-overlay absolute inset-0 bg-transparent" />
-              )}
+    <section className="fade-bg overflow-hidden">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-24 ml-10 flex items-center gap-1">
+          <span className="text-bakery-gray text-lg font-bold">—</span>
+          <h2 className="section-title">OUR CUSTOM CREATIONS </h2>
+        </div>
+        <div
+          ref={containerRef}
+          className="sticky top-0 mx-auto grid h-[100dvh] max-w-4xl grid-cols-4 gap-4 sm:grid-cols-3 md:grid-cols-[repeat(13,minmax(0,1fr))]"
+        >
+          {imageData.map((image, index) => (
+            <div key={index} className={`flex h-full ${image.cellClasses}`}>
+              <div
+                className={`image-cell relative ${
+                  image.imageClasses || 'w-full'
+                } aspect-[4/6]`}
+              >
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  fill
+                  sizes="(min-width: 768px) 15vw, (min-width: 640px) 30vw, 50vw"
+                  className="rounded-md object-cover"
+                />
+                {/* This overlay is only rendered for the last image. */}
+                {index === imageData.length - 1 && (
+                  <div className="image-overlay absolute inset-0 bg-transparent" />
+                )}
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <span className="gallery-button z-10 rounded-md p-4 text-6xl font-bold text-white opacity-0">
-          Each is a unique piece of art, made just for you.
-        </span>
+          ))}
+          <span
+            className="gallery-text absolute inset-0 z-10 mx-auto flex max-w-3xl items-start pt-20 text-center text-7xl font-bold opacity-0"
+            style={{ fontFamily: 'var(--font-meow_Script), cursive' }}
+          >
+            A unique work of art, created just for you.{' '}
+          </span>
+        </div>
       </div>
     </section>
   );

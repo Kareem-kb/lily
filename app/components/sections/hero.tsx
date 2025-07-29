@@ -4,6 +4,7 @@ import { useGSAP } from '@gsap/react';
 import { SplitText } from 'gsap/SplitText';
 import Image from 'next/image';
 import { masterTimeline } from '@/app/lib/gsap/master-timeline';
+import { slideWords } from '@/app/lib/gsap/split-text';
 
 gsap.registerPlugin(SplitText);
 
@@ -16,6 +17,8 @@ export default function Hero() {
       { yPercent: 5 },
       { yPercent: 0, duration: 0.8, ease: 'power1.out' }
     );
+
+    slideWords('.slide-words');
 
     const split = SplitText.create('.hero-title', {
       type: 'lines',
@@ -58,11 +61,6 @@ export default function Hero() {
         duration: 1,
         ease: 'power4.out',
         yPercent: 75,
-        onComplete: () => {
-          gsap.to('.hero-btn', {
-            borderRadius: '0.75rem',
-          });
-        },
       },
       '<'
     ).addLabel('heroDone');
@@ -71,35 +69,31 @@ export default function Hero() {
   });
 
   return (
-    <div className="bg-bakery-background h-screen hero-section">
-      <div
-        className="mx-auto flex h-full w-full max-w-7xl flex-col px-4 sm:px-6 lg:px-8 md:flex-row"
-      >
+    <div className="hero-section h-screen">
+      <div className="mx-auto flex h-full w-full max-w-7xl flex-col px-4 sm:px-6 md:flex-row lg:px-8">
         <div className="flex basis-1/2 flex-col justify-center gap-2">
-          <h1 className="hero-title">
-            Cakes That Make Moments Unforgettable&nbsp;
-            <span className="inline-block h-[1.1em] overflow-hidden align-baseline">
-              <span
-                className="text-bakery-primary animate-slideWords block"
-                style={{ animation: 'slideWords 20s ease-in-out infinite' }}
-              >
-                Memories
-                <br />
-                Milestones
-                <br />
-                Celebrations <br />
-                Memories
+          <h1 className="hero-title heading-section">
+            Cakes That Make Moments&nbsp;
+            <span className="whitespace-nowrap">
+              Unforgettable&nbsp;
+              <span className="inline-block h-[1.04em] w-fit overflow-hidden align-baseline">
+                <span className="text-bakery-primary slide-words">
+                  Memories
+                  <br />
+                  Milestones
+                  <br />
+                  Celebrations <br />
+                  Memories
+                </span>
               </span>
             </span>
           </h1>
-          <p className="hero-subtitle">
+          <p className="hero-subtitle text-p">
             From dream weddings to unforgettable birthdays, we create
             personalized cakes that taste as incredible.
           </p>
           <div className="mt-4 overflow-hidden">
-            <button className="bg-bakery-primary hero-btn">
-              <span className="text-bakery-background">Order Yours </span>
-            </button>
+            <button className="btn-p hero-btn">Order Yours</button>
           </div>
         </div>
 

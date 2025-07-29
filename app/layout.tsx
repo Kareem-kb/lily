@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import {
-  Playfair_Display,
+  Ms_Madi,
   Quattrocento,
   Manrope,
   Cairo,
@@ -9,11 +9,10 @@ import {
 } from 'next/font/google';
 import './globals.css';
 
-// English fonts
-const playfair_Display = Playfair_Display({
+const meow_Script = Ms_Madi({
   subsets: ['latin'],
-  variable: '--font-playfair_Display',
-  weight: ['700'],
+  variable: '--font-meow_Script',
+  weight: ['400'],
 });
 
 const quattrocento = Quattrocento({
@@ -61,7 +60,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${playfair_Display.variable} ${quattrocento.variable} ${manrope.variable} bg-light antialiased ${cairo.variable} ${markazi_Text.variable} ${noto_Kufi_Arabic.variable}`}
+        className={`${meow_Script.variable} ${quattrocento.variable} ${manrope.variable} bg-light antialiased ${cairo.variable} ${markazi_Text.variable} ${noto_Kufi_Arabic.variable}`}
       >
         {children}
       </body>

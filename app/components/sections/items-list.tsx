@@ -13,8 +13,6 @@ export default function ItemsList() {
   const formWrapperRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // This is the only helper function you need.
-  // It matches the simple example you liked.
   const gotoStep = (next: number) => {
     // 1. Get the initial state
     const state = Flip.getState('.step-animation');
@@ -47,75 +45,85 @@ export default function ItemsList() {
 
   return (
     <section
-      className="flex h-screen flex-col items-center justify-center"
+      className="flex h-screen flex-col justify-center gap-20 bg-[url('/lily-pattern.svg')] bg-repeat"
+      style={{ backgroundSize: 'calc(100%/6) calc(100%/3)' }}
       ref={mainContainerRef}
     >
-      <div className="w-full max-w-4xl justify-end">
-        <span className="text-lg font-bold">Let&apos;s Customise you cake</span>
-      </div>
+      <div className="mx-auto grid h-full w-full max-w-6xl">
+        <div className="mt-5 ml-10 flex items-center gap-1">
+          <span className="text-bakery-gray text-lg font-bold">—</span>
+          <h2 className="section-title">LET&apos;S CREATE TOGETHER</h2>
+        </div>
 
-      <div className="flex h-[70vh] max-w-lg flex-col gap-6 p-4">
-        <form
-          action={formAction}
-          className="flex h-full w-full flex-col justify-end overflow-hidden rounded-lg shadow-[0px_4px_45px_9px_rgba(51,_65,_85,_0.12)]"
-        >
-          {/* --- THE SIMPLIFIED LOOP --- */}
+        <div className="flex w-full justify-center">
+          <div className="flex h-[65vh] max-w-lg flex-col gap-6 p-4">
+            <form
+              action={formAction}
+              className="flex h-full w-full flex-col justify-end overflow-hidden rounded-lg bg-white shadow-[0px_4px_45px_9px_rgba(51,_65,_85,_0.12)]"
+            >
+              {/* --- THE SIMPLIFIED LOOP --- */}
 
-          <div
-            ref={formWrapperRef}
-            className="form-step-wrapper grid h-full grid-rows-[0_93%_auto_0] overflow-hidden p-4"
-          >
-            {questionsList.map(
-              ({ id, component: Component, ...props }, index) => (
-                <div
-                  key={id}
-                  className={`step-animation col-start-1 ${
-                    index === currentIndex
-                      ? 'pointer-events-auto row-start-2 self-start' // current card (visible top)
-                      : index === currentIndex + 1
-                        ? 'pointer-events-none row-start-3 self-start' // next card (visible bottom, controls offset via preview prop)
-                        : index < currentIndex
-                          ? 'pointer-events-none row-start-1 mb-10 self-end' // previous cards (hidden above)
-                          : 'pointer-events-none row-start-4 self-start' // future cards (hidden below)
-                  }`}
-                >
-                  <div className="flex w-full items-start gap-2">
-                    <span className="w-fit flex-shrink-0 rounded-full border-2 border-gray-300 px-2.5 py-1.5 text-sm font-bold text-gray-500">
-                      {id}.
-                    </span>
-                    <div className="flex-1">
-                      <Component
-                        {...(props as Record<string, unknown>)}
-                        preview={index === currentIndex + 1}
-                      />
+              <div
+                ref={formWrapperRef}
+                className="form-step-wrapper grid h-full grid-rows-[0_93%_auto_0] overflow-hidden p-4"
+              >
+                {questionsList.map(
+                  ({ id, component: Component, ...props }, index) => (
+                    <div
+                      key={id}
+                      className={`step-animation col-start-1 ${
+                        index === currentIndex
+                          ? 'pointer-events-auto row-start-2 self-start' // current card (visible top)
+                          : index === currentIndex + 1
+                            ? 'pointer-events-none row-start-3 self-start' // next card (visible bottom, controls offset via preview prop)
+                            : index < currentIndex
+                              ? 'pointer-events-none row-start-1 mb-10 self-end' // previous cards (hidden above)
+                              : 'pointer-events-none row-start-4 self-start' // future cards (hidden below)
+                      }`}
+                    >
+                      <div className="flex w-full items-start gap-2">
+                        <span className="w-fit flex-shrink-0 rounded-full border-2 border-gray-300 px-2.5 py-1.5 text-sm font-bold text-gray-500">
+                          {id}.
+                        </span>
+                        <div className="flex-1">
+                          <Component
+                            {...(props as Record<string, unknown>)}
+                            preview={index === currentIndex + 1}
+                          />
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              )
-            )}
+                  )
+                )}
+              </div>
+              <div className="relative z-10 flex w-full justify-between bg-white p-4 shadow-[0px_4px_45px_9px_rgba(51,_65,_85,_0.12)]">
+                <button
+                  type="button"
+                  className="rounded-md bg-gray-600 p-2 text-white disabled:bg-gray-300"
+                  disabled={isPending || currentIndex === 0}
+                  onClick={() => gotoStep(Math.max(currentIndex - 1, 0))}
+                >
+                  Previous
+                </button>
+                <button
+                  className="rounded-md bg-gray-600 p-2 text-white disabled:bg-gray-300"
+                  type="button"
+                  disabled={
+                    isPending || currentIndex === questionsList.length - 1
+                  }
+                  onClick={() =>
+                    gotoStep(
+                      Math.min(currentIndex + 1, questionsList.length - 1)
+                    )
+                  }
+                >
+                  Next
+                </button>
+              </div>
+            </form>
+            {state && <p></p>}
           </div>
-          <div className="relative z-10 flex w-full justify-between bg-white p-4 shadow-[0px_4px_45px_9px_rgba(51,_65,_85,_0.12)]">
-            <button
-              type="button"
-              className="rounded-md bg-gray-600 p-2 text-white disabled:bg-gray-300"
-              disabled={isPending || currentIndex === 0}
-              onClick={() => gotoStep(Math.max(currentIndex - 1, 0))}
-            >
-              Previous
-            </button>
-            <button
-              className="rounded-md bg-gray-600 p-2 text-white disabled:bg-gray-300"
-              type="button"
-              disabled={isPending || currentIndex === questionsList.length - 1}
-              onClick={() =>
-                gotoStep(Math.min(currentIndex + 1, questionsList.length - 1))
-              }
-            >
-              Next
-            </button>
-          </div>
-        </form>
-        {state && <p></p>}
+        </div>
       </div>
     </section>
   );

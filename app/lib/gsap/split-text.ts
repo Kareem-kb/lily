@@ -13,3 +13,16 @@ export async function splitText(selector: string | Element) {
     linesClass: 'block overflow-hidden about-lines',
   });
 }
+
+export function slideWords(selector: string) {
+  const split = new SplitText(selector, { type: 'lines' });
+  const tl = gsap.timeline({ repeat: -1 });
+
+  split.lines.forEach((line, i) => {
+    tl.to(split.lines, {
+      yPercent: -100 * i,
+      duration: 1,
+      ease: 'power2.inOut',
+    }).to({}, { duration: 5 }); // pause between transitions
+  });
+}
