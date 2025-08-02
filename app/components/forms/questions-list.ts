@@ -1,6 +1,6 @@
-import { InputField, TextArea, FileUpload } from './FormInputs';
-import { Dropdown } from './dropDown';
-import { DatePicker } from './DatePicker';
+import { InputField, TextArea, FileUpload } from './form-inputs';
+import { Dropdown } from './dropdown-select';
+import { DatePicker } from './date-picker';
 
 // Single optional flag shared by all question components
 export interface PreviewableProps {

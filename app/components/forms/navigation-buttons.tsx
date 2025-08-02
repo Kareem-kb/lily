@@ -40,7 +40,7 @@ export default function NavigationButtons({
       ) : (
         <button
           type="button"
-          className="w-24 rounded-lg border-2 border-gray-600 px-4 py-2 text-center font-bold text-gray-600 disabled:border-gray-300 disabled:text-gray-300"
+          className="w-24 rounded-lg  bg-gray-600 px-4 py-2 text-center font-bold text-white disabled:bg-gray-300 disabled:text-white"
           disabled={
             isPending || currentIndex === totalQuestions - 1 || !isValid
           }

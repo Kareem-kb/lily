@@ -1,32 +1,33 @@
 'use client';
-import Hero from './components/sections/hero';
-import AboutUs from './components/sections/about-us';
-import Navbar from './components/navbar/navbar';
-import ItemsList from './components/sections/items-list';
+import HeroSection from './components/sections/hero-section';
+import AboutSection from './components/sections/about-section';
+import Navbar from './components/layouts/nav-bar';
+import CakeFormSection from './components/sections/form-section';
 import HomeReveal from './lib/gsap/home-reveal';
-import Footer from './components/sections/footer';
+import Footer from './components/layouts/footer';
 import { masterTimeline } from './lib/gsap/master-timeline';
 import { useGSAP } from '@gsap/react';
-import ImageGallery from './components/sections/image-gallery';
+import GallerySection from './components/sections/gallery-section';
+
 export default function Home() {
   useGSAP(() => {
     masterTimeline.play(0);
   }, []);
 
   return (
-    <main >
+    <main>
       <Navbar />
       {/* Hero Section */}
-      <section className="panel ">
+      <section className="panel">
         <HomeReveal />
-        <Hero />
+        <HeroSection />
       </section>
 
       {/* All Other Sections Combined */}
       <section className="panel bg-white">
-        <AboutUs />
-        <ImageGallery />
-        <ItemsList />
+        <AboutSection />
+        <GallerySection />
+        <CakeFormSection />
         <Footer />
       </section>
     </main>

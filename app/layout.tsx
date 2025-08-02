@@ -50,6 +50,13 @@ const noto_Kufi_Arabic = Noto_Kufi_Arabic({
 export const metadata: Metadata = {
   title: 'Your Bakery',
   description: 'Your Bakery Description',
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/icon1.png', sizes: '96x96', type: 'image/png' },
+    ],
+    apple: [{ url: '/apple-icon.png', sizes: '180x180', type: 'image/png' }],
+  },
 };
 
 export default function RootLayout({

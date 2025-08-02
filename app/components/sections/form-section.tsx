@@ -1,12 +1,12 @@
 'use client';
 import { useRef, useState, useMemo } from 'react';
 import { useGSAP } from '@gsap/react';
-import { cakeForm, CakeFormResponse } from '@/app/actions/cake-form';
-import { cakeFormSchema } from '@/app/validation/cake-form';
+import { cakeForm, CakeFormResponse } from '@/app/actions/form-action';
+import { cakeFormSchema } from '@/app/lib/zod/form-validation';
 import { gsap } from 'gsap';
 import { Flip } from 'gsap/Flip';
-import { questionsList } from '@/app/components/forms/QuestionsList';
-import NavigationButtons from '@/app/components/forms/NavigationButtons';
+import { questionsList } from '@/app/components/forms/questions-list';
+import NavigationButtons from '@/app/components/forms/navigation-buttons';
 gsap.registerPlugin(Flip);
 
 export default function ItemsList() {
@@ -88,19 +88,19 @@ export default function ItemsList() {
 
   return (
     <section
-      className="flex h-screen flex-col justify-center gap-20 bg-[url('/lily-pattern.svg')] bg-repeat"
+      className="flex h-screen flex-col justify-center gap-20 bg-[url('/icons/lily-pattern.svg')] bg-repeat"
       style={{ backgroundSize: '120px 122px' }}
       ref={mainContainerRef}
     >
       <div className="mx-auto grid h-full w-full max-w-6xl">
-        <div className="ml-10 flex items-center gap-1">
+        <div className="flex items-end gap-1 md:ml-10">
           <h2 className="section-title drop-shadow-[0_2px_15px_rgba(0,0,0,0.6)]">
             LET&apos;S CREATE TOGETHER{' '}
           </h2>
         </div>
 
         <div className="flex w-full justify-center">
-          <div className="flex h-[70vh] max-w-lg flex-col gap-6 p-4">
+          <div className="flex h-[66vh] max-w-lg flex-col gap-6 p-4">
             <form
               onSubmit={handleSubmit}
               className="flex h-full w-full flex-col justify-end overflow-hidden rounded-lg bg-white shadow-[0px_4px_45px_9px_rgba(51,_65,_85,_0.12)]"

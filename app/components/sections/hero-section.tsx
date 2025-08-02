@@ -102,7 +102,7 @@ export default function Hero() {
         <div className="flex h-full basis-1/2">
           <div className="relative h-full w-full">
             <Image
-              src="/lily-cake-img-1-2.jpg"
+              src="/lily-hero-img.jpg"
               alt="Hero cake"
               fill
               sizes="(max-width: 768px) 80vw, 40vw"

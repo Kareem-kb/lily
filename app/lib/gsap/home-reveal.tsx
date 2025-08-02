@@ -44,7 +44,7 @@ export default function HomeReveal() {
         <Image
           id="revelLogo"
           alt="Bakery Logo"
-          src="/lily-logo-revel.png"
+          src="/lily-logo.png"
           className="rounded-lg md:w-[300px]"
           width={120}
           height={100}

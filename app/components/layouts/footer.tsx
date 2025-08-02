@@ -14,7 +14,7 @@ export default function Footer() {
             aria-label="Instagram"
           >
             <Image
-              src="/instagram-icon.svg"
+              src="/icons/instagram-icon.svg"
               alt="Instagram Icon"
               width={25}
               height={25}
@@ -28,7 +28,7 @@ export default function Footer() {
             aria-label="TikTok"
           >
             <Image
-              src="/tiktok-icon.svg"
+              src="/icons/tiktok-icon.svg"
               alt="TikTok Icon"
               width={25}
               height={25}
@@ -42,7 +42,7 @@ export default function Footer() {
             aria-label="WhatsApp"
           >
             <Image
-              src="/whatsapp-icon.svg"
+              src="/icons/whatsapp-icon.svg"
               alt="WhatsApp Icon"
               width={25}
               height={25}
