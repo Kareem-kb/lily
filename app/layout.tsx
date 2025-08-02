@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import {
-  Ms_Madi,
+  Bodoni_Moda,
   Quattrocento,
   Manrope,
   Cairo,
@@ -9,7 +9,7 @@ import {
 } from 'next/font/google';
 import './globals.css';
 
-const meow_Script = Ms_Madi({
+const meow_Script = Bodoni_Moda({
   subsets: ['latin'],
   variable: '--font-meow_Script',
   weight: ['400'],
@@ -36,13 +36,13 @@ const cairo = Cairo({
 
 const markazi_Text = Markazi_Text({
   subsets: ['arabic'],
-  variable: '--font-cairo',
+  variable: '--font-markazi_Text',
   weight: ['700'],
 });
 
 const noto_Kufi_Arabic = Noto_Kufi_Arabic({
   subsets: ['arabic'],
-  variable: '--font-cairo',
+  variable: '--font-noto_Kufi_Arabic',
   weight: ['400'],
 });
 

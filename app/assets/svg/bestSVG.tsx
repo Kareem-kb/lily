@@ -15,7 +15,6 @@ export const BestGraph = (props: React.SVGProps<SVGSVGElement>) => {
         duration: 0.5,
         stagger: 0.2, // one after another
         ease: 'power1.out',
-        delay: 0.4
       });
 
       master.add(groupTL); // 4️⃣ queue it

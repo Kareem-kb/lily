@@ -13,30 +13,40 @@ import {
 export function DatePicker({
   name,
   preview = false,
+  value,
+  onChange,
 }: {
   name: string;
   preview?: boolean;
+  value?: string;
+  onChange?: (e: { target: { value: string } }) => void;
 }) {
   const [open, setOpen] = React.useState(false);
-  const [date, setDate] = React.useState<Date | undefined>();
+
+  // Convert string value to Date
+  const date = value ? new Date(value) : undefined;
 
   const today = new Date();
   const maxDate = addDays(today, 60);
 
+  const handleDateSelect = (selectedDate: Date | undefined) => {
+    const dateString = selectedDate
+      ? selectedDate.toISOString().split('T')[0]
+      : '';
+
+    // Call onChange with the expected format
+    onChange?.({ target: { value: dateString } });
+    setOpen(false);
+  };
+
   return (
-    <div
-      className={`flex flex-col p-2 transition-all duration-700 ${preview ? 'gap-6' : 'gap-1'}`}
-    >
+    <div className="flex flex-col p-2">
       <span className="text-xs font-medium">And when is the big day?</span>
-      <input
-        type="hidden"
-        name={name}
-        value={date ? date.toISOString().split('T')[0] : ''}
-      />
+      <input type="hidden" name={name} value={value || ''} />
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <div
-            className={`cursor-pointer border-0 text-base font-bold focus:outline-none ${preview ? 'mt-6' : ''}`}
+            className={`cursor-pointer border-0 text-base font-bold transition-all duration-700 focus:outline-none ${preview ? 'mt-6' : ''}`}
           >
             {date ? (
               <span className={open ? 'text-gray-400' : 'text-black'}>
@@ -62,10 +72,7 @@ export function DatePicker({
               day_button: 'p-1.5 m-0.5',
             }}
             captionLayout="label"
-            onSelect={(d: Date | undefined) => {
-              setDate(d);
-              setOpen(false);
-            }}
+            onSelect={handleDateSelect}
           />
         </PopoverContent>
       </Popover>

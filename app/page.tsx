@@ -4,7 +4,6 @@ import AboutUs from './components/sections/about-us';
 import Navbar from './components/navbar/navbar';
 import ItemsList from './components/sections/items-list';
 import HomeReveal from './lib/gsap/home-reveal';
-// import ProcessList from './components/sections/process-list';
 import Footer from './components/sections/footer';
 import { masterTimeline } from './lib/gsap/master-timeline';
 import { useGSAP } from '@gsap/react';
@@ -26,7 +25,6 @@ export default function Home() {
       {/* All Other Sections Combined */}
       <section className="panel bg-white">
         <AboutUs />
-        {/* <ProcessList /> */}
         <ImageGallery />
         <ItemsList />
         <Footer />

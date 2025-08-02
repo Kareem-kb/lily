@@ -1,5 +1,4 @@
 import { useState, type ChangeEvent } from 'react';
-import Image from 'next/image';
 
 // ---------------- InputField ----------------
 interface InputFieldProps {
@@ -61,52 +60,7 @@ export function TextArea({
   );
 }
 
-// ---------------- RadioGroup ----------------
-
-interface RadioGroupProps {
-  label: string;
-  name: string;
-  options: { label: string; value: string }[];
-  value?: string;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-  preview?: boolean;
-}
-
-export function RadioGroup({
-  label,
-  name,
-  options,
-  value,
-  onChange,
-  preview = false,
-}: RadioGroupProps) {
-  return (
-    <label className="flex flex-col gap-1 p-2">
-      <span className="text-xs font-medium">{label}</span>
-      <div
-        className={`flex flex-wrap gap-3 transition-all duration-700 ${preview ? 'mt-6' : ''}`}
-      >
-        {options.map((opt) => (
-          <label
-            key={opt.value}
-            className="flex cursor-pointer items-center gap-1"
-          >
-            <input
-              type="radio"
-              name={name}
-              value={opt.value}
-              {...(value !== undefined
-                ? { checked: value === opt.value, onChange }
-                : {})}
-              className="h-3 w-3 accent-black"
-            />
-            <span className="text-base font-bold text-black">{opt.label}</span>
-          </label>
-        ))}
-      </div>
-    </label>
-  );
-}
+// ---------------- SelectField ----------------
 
 // Compact single-use upload
 interface FileUploadProps {
@@ -114,63 +68,59 @@ interface FileUploadProps {
   name: string;
   preview?: boolean;
 }
-
 export function FileUpload({ label, name, preview = false }: FileUploadProps) {
-  const [urls, setUrls] = useState<string[]>([]);
+  const [files, setFiles] = useState<File[]>([]);
 
-  const addImages = (e: ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files ?? []);
-    const slotsLeft = 3 - urls.length;
-    const newUrls = files
-      .slice(0, slotsLeft)
-      .map((file) => URL.createObjectURL(file));
-    setUrls((prev) => [...prev, ...newUrls]);
+  const addFiles = (e: ChangeEvent<HTMLInputElement>) => {
+    const newFiles = Array.from(e.target.files ?? []);
+    const slotsLeft = 3 - files.length;
+    const filesToAdd = newFiles.slice(0, slotsLeft);
+    setFiles((prev) => [...prev, ...filesToAdd]);
   };
 
-  const removeImage = (index: number) => {
-    setUrls((prev) => {
-      URL.revokeObjectURL(prev[index]);
-      return prev.filter((_, i) => i !== index);
-    });
+  const removeFile = (index: number) => {
+    setFiles((prev) => prev.filter((_, i) => i !== index));
   };
 
   return (
     <label className="flex flex-col gap-1 p-2">
       <span className="text-xs font-medium">{label}</span>
       <div
-        className={`flex w-full flex-wrap items-center justify-center gap-3 rounded-lg border-2 border-dashed border-gray-300 p-3 transition-all duration-700 ${preview ? 'mt-6' : ''}`}
+        className={`flex w-full flex-col gap-2 rounded-lg border-2 border-dashed border-gray-300 p-3 transition-all duration-700 ${preview ? 'mt-6' : ''}`}
       >
         <input
           type="file"
           accept="image/*"
           multiple
           name={name}
-          onChange={addImages}
+          onChange={addFiles}
           className="sr-only"
-          disabled={urls.length >= 3}
+          disabled={files.length >= 3}
         />
-        {urls.map((u, i) => (
+        {files.map((file, i) => (
           <div
             key={i}
-            className="group relative h-16 w-16 overflow-hidden rounded"
+            className="flex items-center justify-between rounded bg-gray-50 px-3 py-2"
           >
-            <Image src={u} alt={`img-${i}`} fill className="object-cover" />
+            <span className="flex-1 truncate text-sm font-medium text-gray-700">
+              {file.name}
+            </span>
             <button
               type="button"
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                removeImage(i);
+                removeFile(i);
               }}
-              className="absolute top-0.5 right-0.5 hidden h-4 w-4 items-center justify-center rounded bg-black/60 text-[10px] text-white group-hover:flex"
+              className="ml-2 text-red-500 hover:text-red-700"
             >
               ×
             </button>
           </div>
         ))}
-        {urls.length < 3 && (
-          <span className="flex h-16 w-16 cursor-pointer items-center justify-center rounded border border-dashed border-gray-300 text-2xl text-gray-400">
-            +
+        {files.length < 3 && (
+          <span className="flex cursor-pointer items-center justify-center rounded border border-dashed border-gray-300 py-2 text-sm text-gray-400">
+            + Add image
           </span>
         )}
       </div>

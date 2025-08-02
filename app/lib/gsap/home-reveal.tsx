@@ -17,10 +17,9 @@ export default function HomeReveal() {
     }).to(
       '#revelCover',
       {
-        duration: 0.8,
+        duration: 1,
         backgroundSize: '100% 0%',
-        ease: 'circ.inOut',
-        onComplete: () => document.getElementById('revelCover')?.remove(),
+        ease: 'power1.inOut',
       },
       '<0.2' // start this after the logo animation
     );

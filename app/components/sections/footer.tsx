@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="mb-1 font-semibold">Social Media</div>
         <div className="flex space-x-4">
           <Link
-            href="https://instagram.com/"
+            href="https://www.instagram.com/lilycake.2/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram"
@@ -18,10 +18,11 @@ export default function Footer() {
               alt="Instagram Icon"
               width={25}
               height={25}
+              className="h-6 w-6"
             />
           </Link>
           <Link
-            href="https://tiktok.com/"
+            href="https://www.tiktok.com/@lilycake2?_t=ZN-8yUvC59XlGI&_r=1"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="TikTok"
@@ -31,10 +32,11 @@ export default function Footer() {
               alt="TikTok Icon"
               width={25}
               height={25}
+              className="h-6 w-6"
             />
           </Link>
           <a
-            href="https://wa.me/"
+            href="https://wa.me/+966558194872?text=Hi%20Lily%20Cake!%20I%20would%20like%20to%20order%20a%20cake."
             target="_blank"
             rel="noopener noreferrer"
             aria-label="WhatsApp"
@@ -44,6 +46,7 @@ export default function Footer() {
               alt="WhatsApp Icon"
               width={25}
               height={25}
+              className="h-6 w-6"
             />
           </a>
         </div>

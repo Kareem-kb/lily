@@ -45,10 +45,11 @@ export default function Hero() {
         tl.from(
           self.lines,
           {
-            yPercent: 80,
+            yPercent: 100,
             opacity: 0,
-            duration: 0.8,
-            ease: 'sine.out',
+            duration: 0.5,
+            stagger: 0.1,
+            ease: 'power2.out',
           },
           '<0.1'
         );
@@ -65,7 +66,7 @@ export default function Hero() {
       '<'
     ).addLabel('heroDone');
 
-    masterTimeline.add(tl, '-=0.5');
+    masterTimeline.add(tl, 'revealDone-=0.9');
   });
 
   return (

@@ -25,4 +25,5 @@ export function slideWords(selector: string) {
       ease: 'power2.inOut',
     }).to({}, { duration: 5 }); // pause between transitions
   });
+  return tl;
 }

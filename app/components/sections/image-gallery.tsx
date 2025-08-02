@@ -7,8 +7,6 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
-
-// The component's data is now more descriptive for easier maintenance.
 const imageData = [
   {
     src: '/gallary/insta-1.jpg',
@@ -92,7 +90,7 @@ export default function ImageGallery() {
       .to(
         '.fade-bg',
         {
-          backgroundColor: '#aaaaaa',
+          backgroundColor: '#303030',
           ease: 'power2.inOut',
         },
         0
@@ -102,6 +100,7 @@ export default function ImageGallery() {
         {
           opacity: 1,
           ease: 'power2.inOut',
+          duration: 0.2,
         },
         '>-0.1'
       );
@@ -121,7 +120,14 @@ export default function ImageGallery() {
 
       // Check if this is the last image to apply a special animation.
       if (index === imageCells.length - 1) {
-        timeline.to(cell, { x, y, scale: 1.2, ease: 'power2.inOut' }, 0);
+        // Set initial filter state
+        gsap.set(cell, { filter: 'brightness(1)' });
+
+        timeline.to(
+          cell,
+          { x, y, scale: 2, ease: 'power2.inOut', filter: 'brightness(0.75)' },
+          0
+        );
         // Find the overlay and animate its background color to create the mask effect.
         const overlay = cell.querySelector('.image-overlay');
         if (overlay) {
@@ -138,12 +144,11 @@ export default function ImageGallery() {
     <section className="fade-bg overflow-hidden">
       <div className="mx-auto max-w-6xl">
         <div className="mb-24 ml-10 flex items-center gap-1">
-          <span className="text-bakery-gray text-lg font-bold">—</span>
           <h2 className="section-title">OUR CUSTOM CREATIONS </h2>
         </div>
         <div
           ref={containerRef}
-          className="sticky top-0 mx-auto grid h-[100dvh] max-w-4xl grid-cols-4 gap-4 sm:grid-cols-3 md:grid-cols-[repeat(13,minmax(0,1fr))]"
+          className="sticky top-0 mx-auto grid h-[100dvh] max-w-5xl grid-cols-4 gap-4 py-6 sm:grid-cols-3 md:grid-cols-[repeat(13,minmax(0,1fr))]"
         >
           {imageData.map((image, index) => (
             <div key={index} className={`flex h-full ${image.cellClasses}`}>
@@ -167,10 +172,10 @@ export default function ImageGallery() {
             </div>
           ))}
           <span
-            className="gallery-text absolute inset-0 z-10 mx-auto flex max-w-3xl items-start pt-20 text-center text-7xl font-bold opacity-0"
+            className="gallery-text absolute inset-0 z-10 flex h-full w-full items-center justify-center text-center text-7xl font-thin text-white opacity-0"
             style={{ fontFamily: 'var(--font-meow_Script), cursive' }}
           >
-            A unique work of art, created just for you.{' '}
+            A unique work of art <br /> just for you
           </span>
         </div>
       </div>

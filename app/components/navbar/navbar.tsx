@@ -5,24 +5,22 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import { masterTimeline } from '@/app/lib/gsap/master-timeline';
 
 export default function NavBar() {
   const [isScrolled, setIsScrolled] = useState(false);
   useGSAP(() => {
-    gsap.from('.navLogo', {
-      xPercent: -120, // slide in from left
+    const tl = gsap.timeline({ id: 'nav' });
+    tl.from('.navLogo', {
+      yPercent: -160, // slide in from left
       duration: 1,
-      opacity: 0.5,
       ease: 'power2.out',
-      scale: 0.8, // scale down slightly
     });
-    // gsap.from('.navItems', {
-    //   opacity: 0.5,
-    //   xPercent: 120, // slide in from right
-    //   duration: 1,
-    //   ease: 'power2.out',
-    //   scale: 0.8, // scale down slightly
-    // });
+
+    // Wait for reveal to be added first, then add nav
+    gsap.delayedCall(0.1, () => {
+      masterTimeline.add(tl, 'heroDone-=0.3');
+    });
   });
 
   useEffect(() => {
