@@ -25,7 +25,9 @@ export default function Home() {
 
       {/* All Other Sections Combined */}
       <section className="panel bg-white">
-        <AboutSection />
+        <div className="px-4 sm:px-6 lg:px-8">
+          <AboutSection />
+        </div>
         <GallerySection />
         <CakeFormSection />
         <Footer />

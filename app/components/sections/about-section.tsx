@@ -42,7 +42,7 @@ export default function AboutUs() {
       className="about-section mx-auto my-[18vh] h-[60vh] max-w-6xl"
     >
       <div className="mx-auto grid h-full w-full items-center gap-4">
-        <h2 className="section-title ml-10 h-fit self-end">OUR STORY </h2>
+        <h2 className="section-title h-fit self-end">OUR STORY </h2>
         <div className="grid h-fit w-full grid-cols-1 place-items-center gap-8 md:grid-cols-[1.5fr_1fr]">
           <p className="about-text text-p">
             What began as a passion in a cozy home kitchen has blossomed, with

@@ -1,72 +1,85 @@
 'use client';
 import gsap from 'gsap';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { useGSAP } from '@gsap/react';
 import { SplitText } from 'gsap/SplitText';
 import Image from 'next/image';
 import { masterTimeline } from '@/app/lib/gsap/master-timeline';
-import { slideWords } from '@/app/lib/gsap/split-text';
+import { slideWords, createSplitText } from '@/app/lib/gsap/split-text';
 
-gsap.registerPlugin(SplitText);
+gsap.registerPlugin(SplitText, ScrollToPlugin);
 
 export default function Hero() {
+  const handleOrderClick = () => {
+    gsap.to(window, {
+      duration: 1.5,
+      ease: 'power2.inOut',
+      scrollTo: { y: '.form-section', offsetY: 0 },
+    });
+  };
+
   useGSAP(() => {
-    const tl = gsap.timeline({ id: 'hero' });
+    const initAnimations = async () => {
+      const tl = gsap.timeline({ id: 'hero' });
 
-    tl.fromTo(
-      '.heroImage',
-      { yPercent: 5 },
-      { yPercent: 0, duration: 0.8, ease: 'power1.out' }
-    );
+      tl.fromTo(
+        '.heroImage',
+        { yPercent: 5 },
+        { yPercent: 0, duration: 0.8, ease: 'power1.out' }
+      );
 
-    slideWords('.slide-words');
+      // Wait for fonts before initializing SplitText animations
+      await slideWords('.slide-words');
 
-    const split = SplitText.create('.hero-title', {
-      type: 'lines',
-      linesClass: 'block overflow-hidden', // optional clip wrapper
-      mask: 'lines', // keeps the slide-in hidden
-    });
+      const split = await createSplitText('.hero-title', {
+        type: 'lines',
+        linesClass: 'block overflow-hidden',
+        mask: 'lines',
+      });
 
-    tl.from(
-      split.lines,
-      {
-        yPercent: 60,
-        opacity: 0,
-        duration: 1,
-        ease: 'power4.out',
-      },
-      '<'
-    );
+      tl.from(
+        split.lines,
+        {
+          yPercent: 60,
+          opacity: 0,
+          duration: 1,
+          ease: 'power4.out',
+        },
+        '<'
+      );
 
-    SplitText.create('.hero-subtitle', {
-      type: 'lines',
-      linesClass: 'block overflow-hidden', // optional clip wrapper
-      mask: 'lines',
-      onSplit(self) {
-        tl.from(
-          self.lines,
-          {
-            yPercent: 100,
-            opacity: 0,
-            duration: 0.5,
-            stagger: 0.1,
-            ease: 'power2.out',
-          },
-          '<0.1'
-        );
-      },
-    });
+      const subtitleSplit = await createSplitText('.hero-subtitle', {
+        type: 'lines',
+        linesClass: 'block overflow-hidden',
+        mask: 'lines',
+      });
 
-    tl.from(
-      '.hero-btn',
-      {
-        duration: 1,
-        ease: 'power4.out',
-        yPercent: 75,
-      },
-      '<'
-    ).addLabel('heroDone');
+      tl.from(
+        subtitleSplit.lines,
+        {
+          yPercent: 100,
+          opacity: 0,
+          duration: 0.5,
+          stagger: 0.1,
+          ease: 'power2.out',
+        },
+        '<0.1'
+      );
 
-    masterTimeline.add(tl, 'revealDone-=0.9');
+      tl.from(
+        '.hero-btn',
+        {
+          duration: 1,
+          ease: 'power4.out',
+          yPercent: 75,
+        },
+        '<'
+      ).addLabel('heroDone');
+
+      masterTimeline.add(tl, 'revealDone-=0.9');
+    };
+
+    initAnimations();
   });
 
   return (
@@ -94,7 +107,9 @@ export default function Hero() {
             personalized cakes that taste as incredible.
           </p>
           <div className="mt-4 overflow-hidden">
-            <button className="btn-p hero-btn">Order Yours</button>
+            <button className="btn-p hero-btn" onClick={handleOrderClick}>
+              Order Yours
+            </button>
           </div>
         </div>
 

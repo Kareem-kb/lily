@@ -27,12 +27,12 @@ export const questionsList: QuestionConfig[] = [
   },
   {
     id: 2,
-    name: 'date',
+    name: 'delivery_date',
     component: DatePicker,
   },
   {
     id: 3,
-    name: 'tiers',
+    name: 'cake_tiers',
     component: Dropdown,
     label: 'How many tiers will it be?',
     placeholder: 'Layers of joy...',
@@ -64,7 +64,7 @@ export const questionsList: QuestionConfig[] = [
   },
   {
     id: 6,
-    name: 'cakeStyle',
+    name: 'description',
     component: TextArea,
     label: "Describe your dream cake's design",
     placeholder:
@@ -93,14 +93,14 @@ export const questionsList: QuestionConfig[] = [
   },
   {
     id: 10,
-    name: 'address',
+    name: 'delivery_address',
     component: InputField,
     label: 'Delivery Address',
     placeholder: 'Where the magic is happening',
   },
   {
     id: 11,
-    name: 'additionalInfo',
+    name: 'requests',
     component: TextArea,
     label: 'Any special text or requests?',
     placeholder: "e.g., 'Happy 40th!', allergies, delivery notes",

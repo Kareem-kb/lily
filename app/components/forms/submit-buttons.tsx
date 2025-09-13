@@ -1,11 +1,7 @@
 'use client';
 import { useState, useRef } from 'react';
-import { gsap } from 'gsap';
 import { Flip } from 'gsap/Flip';
 import { useGSAP } from '@gsap/react';
-
-// Register the Flip plugin once
-gsap.registerPlugin(Flip);
 
 interface NavigationButtonsProps {
   currentIndex: number;
@@ -27,45 +23,40 @@ export default function NavigationButtons({
   isValid = false,
 }: NavigationButtonsProps) {
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const flipStateRef = useRef<Flip.FlipState | null>(null); // Ref to store the "before" state
+  const containerRef = useRef<HTMLDivElement>(null);
+  const flipStateRef = useRef<Flip.FlipState | null>(null);
 
   const handleSubmit = () => {
-    // 1. Capture the state of the buttons BEFORE the DOM changes
-    if (containerRef.current) {
-      const buttons = (containerRef.current as HTMLElement).querySelectorAll(
-        '.prev-btn, .submit-btn'
-      );
-      flipStateRef.current = Flip.getState(buttons, { props: 'opacity' });
-    }
+    if (!containerRef.current) return;
 
-    // 2. Update React state to trigger the re-render
-    setIsSubmitClicked(true);
-    onSubmit();
+    // Capture state and trigger animation in one frame
+    flipStateRef.current = Flip.getState(
+      containerRef.current.querySelectorAll('.prev-btn, .submit-btn'),
+      { props: 'opacity, transform' }
+    );
+
+    requestAnimationFrame(() => {
+      setIsSubmitClicked(true);
+      onSubmit();
+    });
   };
 
-  // 3. Animate from the old state to the new state after the render
+  // Animate after state change
   useGSAP(() => {
-    if (!isSubmitClicked || !flipStateRef.current || !containerRef.current) {
-      return;
-    }
+    if (!isSubmitClicked || !flipStateRef.current) return;
 
-    // This runs after React has updated the DOM (hiding the "Previous" button)
     Flip.from(flipStateRef.current, {
       duration: 1,
       ease: 'power2.inOut',
-      // 'absolute' helps animate elements that are being removed from the layout flow
-      absolute: true,
     });
 
-    // Clean up the ref
     flipStateRef.current = null;
   }, [isSubmitClicked]);
 
   return (
     <div
       ref={containerRef}
-      className={`btn-position h-[5rem] flex w-full bg-white p-4 shadow-[0px_4px_45px_9px_rgba(51,_65,_85,_0.12)] ${
+      className={`btn-position flex h-[5rem] w-full bg-white p-4 shadow-[0px_4px_45px_9px_rgba(51,_65,_85,_0.12)] ${
         isSubmitClicked ? 'justify-center' : 'justify-between'
       }`}
     >

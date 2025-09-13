@@ -6,7 +6,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/app/lib/shadcn/dropdown-menu'; // Assuming this path is correct
+} from '@/app/components/shadcn/dropdown-menu'; // Assuming this path is correct
 
 interface DropdownProps {
   label: string;
@@ -54,7 +54,7 @@ export function Dropdown({
       <div className={preview ? 'mt-6' : ''}>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="flex w-full items-center justify-between px-3 py-2 text-left font-bold text-black ">
+            <button className="flex w-full items-center justify-between px-3 py-2 text-left font-bold text-black">
               {selectedLabel}
               {/* Optional: Add a chevron icon for better UX */}
             </button>

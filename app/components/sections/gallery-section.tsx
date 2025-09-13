@@ -142,42 +142,42 @@ export default function ImageGallery() {
 
   return (
     <section className="fade-bg overflow-hidden">
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-24 ml-10 flex items-center gap-1">
+      <div className="px-4 sm:px-6 lg:px-8">
+        <div className="mb-24 flex items-center gap-1">
           <h2 className="section-title">OUR CUSTOM CREATIONS </h2>
         </div>
-        <div
-          ref={containerRef}
-          className="sticky top-0 mx-auto grid h-[100dvh] max-w-5xl grid-cols-4 gap-4 py-6 sm:grid-cols-3 md:grid-cols-[repeat(13,minmax(0,1fr))]"
-        >
-          {imageData.map((image, index) => (
-            <div key={index} className={`flex h-full ${image.cellClasses}`}>
-              <div
-                className={`image-cell relative ${
-                  image.imageClasses || 'w-full'
-                } aspect-[4/6]`}
-              >
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  fill
-                  sizes="(min-width: 768px) 15vw, (min-width: 640px) 30vw, 50vw"
-                  className="rounded-md object-cover"
-                />
-                {/* This overlay is only rendered for the last image. */}
-                {index === imageData.length - 1 && (
-                  <div className="image-overlay absolute inset-0 bg-transparent" />
-                )}
-              </div>
+      </div>
+      <div
+        ref={containerRef}
+        className="sticky top-0 grid h-[100dvh] w-full grid-cols-4 gap-4 px-4 py-6 sm:grid-cols-3 sm:px-6 md:grid-cols-[repeat(13,minmax(0,1fr))] lg:px-8"
+      >
+        {imageData.map((image, index) => (
+          <div key={index} className={`flex h-full ${image.cellClasses}`}>
+            <div
+              className={`image-cell relative ${
+                image.imageClasses || 'w-full'
+              } aspect-[4/6]`}
+            >
+              <Image
+                src={image.src}
+                alt={image.alt}
+                fill
+                sizes="(min-width: 768px) 15vw, (min-width: 640px) 30vw, 50vw"
+                className="rounded-md object-cover"
+              />
+              {/* This overlay is only rendered for the last image. */}
+              {index === imageData.length - 1 && (
+                <div className="image-overlay absolute inset-0 bg-transparent" />
+              )}
             </div>
-          ))}
-          <span
-            className="gallery-text absolute inset-0 z-10 flex h-full w-full items-center justify-center text-center text-7xl font-thin text-white opacity-0"
-            style={{ fontFamily: 'var(--font-meow_Script), cursive' }}
-          >
-            A unique work of art <br /> just for you
-          </span>
-        </div>
+          </div>
+        ))}
+        <span
+          className="gallery-text absolute inset-0 z-10 flex h-full w-full items-center justify-center text-center text-7xl font-thin text-white opacity-0"
+          style={{ fontFamily: 'var(--font-meow_Script), cursive' }}
+        >
+          A unique work of art <br /> just for you
+        </span>
       </div>
     </section>
   );

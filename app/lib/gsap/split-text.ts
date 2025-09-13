@@ -10,11 +10,13 @@ export async function splitText(selector: string | Element) {
   return new SplitText(selector, {
     type: 'lines words',
     mask: 'lines',
-    linesClass: 'block overflow-hidden about-lines',
+    linesClass: 'block overflow-hidden',
   });
 }
 
-export function slideWords(selector: string) {
+export async function slideWords(selector: string) {
+  await document.fonts.ready;
+
   const split = new SplitText(selector, { type: 'lines' });
   const tl = gsap.timeline({ repeat: -1 });
 
@@ -26,4 +28,12 @@ export function slideWords(selector: string) {
     }).to({}, { duration: 5 }); // pause between transitions
   });
   return tl;
+}
+
+export async function createSplitText(
+  selector: string | Element,
+  options: any = {}
+) {
+  await document.fonts.ready;
+  return new SplitText(selector, options);
 }

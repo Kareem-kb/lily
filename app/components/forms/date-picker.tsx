@@ -1,14 +1,11 @@
-// app/components/forms/cake-form/date-picker.tsx
-'use client';
-
 import * as React from 'react';
 import { addDays } from 'date-fns';
-import { Calendar } from '@/app/lib/shadcn/calendar';
+import { Calendar } from '@/app/components/shadcn/calendar';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/app/lib/shadcn/popover';
+} from '@/app/components/shadcn/popover';
 
 export function DatePicker({
   name,

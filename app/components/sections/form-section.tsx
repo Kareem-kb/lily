@@ -1,18 +1,20 @@
 'use client';
 import { useRef, useState, useMemo } from 'react';
 import { useGSAP } from '@gsap/react';
-import { cakeForm } from '@/app/actions/form-action';
 import { cakeFormSchema } from '@/app/lib/zod/form-validation';
 import { gsap } from 'gsap';
 import { Flip } from 'gsap/Flip';
 import { questionsList } from '@/app/components/forms/questions-list';
-import NavigationButtons from '@/app/components/forms/navigation-buttons';
+import NavigationButtons from '@/app/components/forms/submit-buttons';
+import { uploadFiles } from '@/app/lib/storage';
+import { cakeForm } from '@/app/actions/form-action';
+import { CakeOrder } from '@/interfaces';
 
 gsap.registerPlugin(Flip);
 
 export default function ItemsList() {
   const [pending, setPending] = useState(false);
-  const [formData, setFormData] = useState<Record<string, string>>({});
+  const [formData, setFormData] = useState<Record<string, string | File[]>>({});
   const [currentIndex, setCurrentIndex] = useState(0);
   const mainContainerRef = useRef<HTMLDivElement>(null);
 
@@ -32,13 +34,17 @@ export default function ItemsList() {
     if (!currentQuestion) return false;
     const fieldName = currentQuestion.name;
     const fieldValue = formData[fieldName];
+
+    // For images field, it's always valid (optional)
+    if (fieldName === 'images') return true;
+
     const result = cakeFormSchema.pick({ [fieldName]: true }).safeParse({
       [fieldName]: fieldValue,
     });
     return result.success;
   }, [currentIndex, formData]);
 
-  const handleFormChange = (name: string, value: string) =>
+  const handleFormChange = (name: string, value: string | File[]) =>
     setFormData((prev) => ({ ...prev, [name]: value }));
 
   const gotoStep = (next: number) => {
@@ -56,11 +62,34 @@ export default function ItemsList() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setPending(true);
+
     try {
-      const formData = new FormData(e.currentTarget);
-      await cakeForm(null, formData);
+      // Extract values from formData and assign images array to a const
+      const { images = [], ...otherFields } = formData;
+
+      // Upload images and get URLs
+      let imageUrls: string[] = [];
+      if (images.length > 0) {
+        imageUrls = await uploadFiles(images as File[]);
+      }
+
+      // Create properly typed form data matching CakeOrder interface
+      const finalFormData: CakeOrder = {
+        ...otherFields,
+        imageUrls: imageUrls, // Match interface property name
+      } as CakeOrder;
+
+      const result = await cakeForm(finalFormData);
+
+      if (result.success) {
+        // Reset form on success
+        setFormData({});
+        setCurrentIndex(0);
+        alert('Order submitted successfully!');
+      }
     } catch (error) {
-      console.error('Form submission error:', error);
+      console.error('Submission error:', error);
+      alert('Failed to submit order. Please try again.');
     } finally {
       setPending(false);
     }
@@ -70,12 +99,12 @@ export default function ItemsList() {
 
   return (
     <section
-      className="flex h-screen flex-col justify-center gap-20 bg-[url('/icons/lily-pattern.svg')] bg-repeat"
+      className="form-section flex h-screen flex-col justify-center gap-20 bg-[url('/icons/lily-pattern.svg')] bg-repeat"
       style={{ backgroundSize: '120px 122px' }}
       ref={mainContainerRef}
     >
-      <div className="mx-auto grid h-full w-full max-w-6xl">
-        <div className="flex items-end gap-1 md:ml-10">
+      <div className="mx-auto grid h-full w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="flex items-end gap-1">
           <h2 className="section-title drop-shadow-[0_2px_15px_rgba(0,0,0,0.6)]">
             LET&apos;S CREATE TOGETHER{' '}
           </h2>
@@ -101,10 +130,13 @@ export default function ItemsList() {
                           <Component
                             {...(props as Record<string, unknown>)}
                             preview={index === currentIndex + 1}
-                            value={formData[props.name] || ''}
-                            onChange={(e: { target: { value: string } }) =>
-                              handleFormChange(props.name, e.target.value)
+                            value={
+                              formData[props.name] ||
+                              (props.name === 'images' ? [] : '')
                             }
+                            onChange={(e: {
+                              target: { value: string | File[] };
+                            }) => handleFormChange(props.name, e.target.value)}
                           />
                         </div>
                       </div>

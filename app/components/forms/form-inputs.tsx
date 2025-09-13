@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent } from 'react';
+import { type ChangeEvent } from 'react';
 
 // ---------------- InputField ----------------
 interface InputFieldProps {
@@ -66,20 +66,42 @@ export function TextArea({
 interface FileUploadProps {
   label: string;
   name: string;
+  value?: File[];
+  onChange?: (e: { target: { name: string; value: File[] } }) => void;
   preview?: boolean;
 }
-export function FileUpload({ label, name, preview = false }: FileUploadProps) {
-  const [files, setFiles] = useState<File[]>([]);
-
+export function FileUpload({
+  label,
+  name,
+  value = [],
+  onChange,
+  preview = false,
+}: FileUploadProps) {
   const addFiles = (e: ChangeEvent<HTMLInputElement>) => {
     const newFiles = Array.from(e.target.files ?? []);
-    const slotsLeft = 3 - files.length;
-    const filesToAdd = newFiles.slice(0, slotsLeft);
-    setFiles((prev) => [...prev, ...filesToAdd]);
+
+    // Filter only image files
+    const imageFiles = newFiles.filter((file) =>
+      file.type.startsWith('image/')
+    );
+
+    const slotsLeft = 3 - value.length;
+    const filesToAdd = imageFiles.slice(0, slotsLeft);
+    const updatedFiles = [...value, ...filesToAdd];
+
+    if (onChange) {
+      onChange({ target: { name, value: updatedFiles } });
+    }
+
+    // Clear the input so the same file can be selected again
+    e.target.value = '';
   };
 
   const removeFile = (index: number) => {
-    setFiles((prev) => prev.filter((_, i) => i !== index));
+    const updatedFiles = value.filter((_, i) => i !== index);
+    if (onChange) {
+      onChange({ target: { name, value: updatedFiles } });
+    }
   };
 
   return (
@@ -95,9 +117,9 @@ export function FileUpload({ label, name, preview = false }: FileUploadProps) {
           name={name}
           onChange={addFiles}
           className="sr-only"
-          disabled={files.length >= 3}
+          disabled={value.length >= 3}
         />
-        {files.map((file, i) => (
+        {value.map((file, i) => (
           <div
             key={i}
             className="flex items-center justify-between rounded bg-gray-50 px-3 py-2"
@@ -118,10 +140,26 @@ export function FileUpload({ label, name, preview = false }: FileUploadProps) {
             </button>
           </div>
         ))}
-        {files.length < 3 && (
-          <span className="flex cursor-pointer items-center justify-center rounded border border-dashed border-gray-300 py-2 text-sm text-gray-400">
-            + Add image
-          </span>
+        {value.length < 3 && (
+          <div
+            className="flex cursor-pointer items-center justify-center py-4 text-sm text-gray-400 transition-colors"
+            onClick={() =>
+              (
+                document.querySelector(
+                  `input[name="${name}"]`
+                ) as HTMLInputElement
+              )?.click()
+            }
+          >
+            <div className="text-center">
+              <div>+ Add {value.length === 0 ? 'images' : 'more images'}</div>
+              <div className="mt-1 text-xs text-gray-300">
+                {value.length === 0
+                  ? 'Select multiple images'
+                  : `${3 - value.length} more allowed`}
+              </div>
+            </div>
+          </div>
         )}
       </div>
     </label>

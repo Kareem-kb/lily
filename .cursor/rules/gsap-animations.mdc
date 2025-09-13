@@ -1,0 +1,78 @@
+---
+globs: *.tsx,*.ts
+description: GSAP animation patterns and optimization rules
+---
+
+# GSAP Animation Rules
+
+## Plugin Registration
+
+- Register GSAP plugins once at the top of files: `gsap.registerPlugin(Flip, ScrollTrigger)`
+- Don't register plugins inside components or hooks
+
+## Flip Animations
+
+- Use `opacity, transform` props for smooth button/layout transitions
+- Always capture state before DOM changes with `requestAnimationFrame`
+- Keep `absolute: false` for normal flow elements
+- Clean up flip state refs after animation
+
+## Performance Optimization
+
+- Use `useGSAP` hook for automatic cleanup
+- Minimize props captured - only capture what you need
+- Use early returns to avoid unnecessary calculations
+- Combine state capture and DOM updates in single frame
+
+## Code Patterns
+
+### Button Flip Animation
+
+```typescript
+const handleAction = () => {
+  if (!containerRef.current) return;
+
+  flipStateRef.current = Flip.getState(
+    containerRef.current.querySelectorAll('.target-elements'),
+    { props: 'opacity, transform' }
+  );
+
+  requestAnimationFrame(() => {
+    setStateChange(true);
+    onAction();
+  });
+};
+
+useGSAP(() => {
+  if (!stateChange || !flipStateRef.current) return;
+
+  Flip.from(flipStateRef.current, {
+    duration: 1,
+    ease: 'power2.inOut',
+  });
+
+  flipStateRef.current = null;
+}, [stateChange]);
+```
+
+### ScrollTrigger Animations
+
+```typescript
+useGSAP(() => {
+  gsap.to(elementRef.current, {
+    scrollTrigger: {
+      trigger: elementRef.current,
+      start: 'top 80%',
+      toggleActions: 'play none none reverse',
+    },
+    // animation properties
+  });
+});
+```
+
+## Best Practices
+
+- Keep animation logic in custom hooks when reusable
+- Use TypeScript refs: `useRef<HTMLDivElement>(null)`
+- Minimize DOM queries - cache selectors when possible
+- Use semantic class names for animation targets
