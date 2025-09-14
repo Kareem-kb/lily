@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190.67 152.35">
-  <g>
-    <circle cx="24.84" cy="84.99" r="6.34" style="fill: none; stroke: #000; stroke-miterlimit: 10; stroke-width: 37px;"/>
-    <circle cx="95.34" cy="84.99" r="6.34" style="fill: none; stroke: #000; stroke-miterlimit: 10; stroke-width: 37px;"/>
-    <circle cx="165.83" cy="84.99" r="6.34" style="fill: none; stroke: #000; stroke-miterlimit: 10; stroke-width: 37px;"/>
-  </g>
-  <path d="M180.12,1.81c1.29,1.56,1.53,3.74.6,5.54l-72.22,140.88c-1.91,3.72-6.48,5.19-10.2,3.28-1.41-.72-2.56-1.87-3.29-3.29l-27.27-53.24L20.47,58.31c-3.31-2.56-3.92-7.32-1.36-10.63.98-1.26,2.32-2.18,3.85-2.63L174.79.21c1.94-.58,4.04.06,5.33,1.61h0ZM78.04,92.98l23.7,46.24,58.74-114.58-82.44,68.34ZM154.04,16.86L30.55,53.35l41.06,31.85L154.04,16.86Z"/>
-</svg>

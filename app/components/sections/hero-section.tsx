@@ -5,21 +5,34 @@ import { SplitText } from 'gsap/SplitText';
 import Image from 'next/image';
 import { masterTimeline } from '@/app/lib/gsap/master-timeline';
 import { slideWords } from '@/app/lib/gsap/split-text';
+import { useEffect, useState } from 'react';
 
 gsap.registerPlugin(SplitText);
 
 export default function Hero() {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   useGSAP(() => {
+    if (!isClient) return;
+
     const tl = gsap.timeline({ id: 'hero' });
 
-    // Create both splits upfront
-    const titleSplit = SplitText.create('.hero-title', {
+    const titleElement = document.querySelector('.hero-title');
+    const subtitleElement = document.querySelector('.hero-subtitle');
+    
+    if (!titleElement || !subtitleElement) return;
+
+    const titleSplit = SplitText.create(titleElement, {
       type: 'lines',
       linesClass: 'block overflow-hidden',
       mask: 'lines',
     });
 
-    const subtitleSplit = SplitText.create('.hero-subtitle', {
+    const subtitleSplit = SplitText.create(subtitleElement, {
       type: 'lines',
       linesClass: 'block overflow-hidden',
       mask: 'lines',
@@ -27,8 +40,8 @@ export default function Hero() {
 
     tl.fromTo(
       '.heroImage',
-      { yPercent: 5 },
-      { yPercent: 0, duration: 0.8, ease: 'power1.out' }
+      { yPercent: 5, opacity: 0 },
+      { yPercent: 0, opacity: 1, duration: 0.8, ease: 'power1.out' }
     );
 
     tl.call(
@@ -62,12 +75,12 @@ export default function Hero() {
     tl.addLabel('heroDone');
 
     masterTimeline.add(tl, 'revealDone-=0.9');
-  });
+  }, [isClient]);
 
   return (
-    <div className="hero-section h-screen">
-      <div className="mx-auto flex h-full w-full max-w-7xl flex-col justify-end px-4 sm:flex-row sm:px-6">
-        <div className="flex flex-col justify-center gap-2 text-[90%] sm:basis-1/2 sm:text-base">
+    <div className="hero-section min-h-screen">
+      <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col justify-end gap-6 px-4 sm:flex-row sm:px-6">
+        <div className="flex flex-col justify-center gap-4 text-[90%] sm:basis-1/2 sm:text-base">
           <h1 className="hero-title heading-section">
             <span className="block sm:inline">Cakes That Make</span>
             <span className="block sm:inline">
@@ -104,18 +117,16 @@ export default function Hero() {
         </div>
 
         {/* ── image column ───────────────────────────── */}
-        <div className="h:fit flex sm:h-full sm:basis-1/2">
-          <div className="relative h-[70vw] w-full sm:h-full">
-            <Image
-              src="/lily-hero-img.jpg"
-              alt="A beautiful, custom-decorated cake from Lily Bakery, perfect for any celebration."
-              fill
-              sizes="(max-width: 640px) 70vw, (max-width: 768px) 80vw, 40vw"
-              priority
-              quality={90}
-              className="heroImage z-0 object-contain object-[right_bottom]"
-            />
-          </div>
+        <div className="relative h-80 w-full sm:h-auto sm:basis-1/2">
+          <Image
+            src="/lily-hero-img.jpg"
+            alt="A beautiful, custom-decorated cake from Lily Bakery, perfect for any celebration."
+            fill
+            sizes="(max-width: 640px) 100vw, 50vw"
+            priority
+            quality={90}
+            className="heroImage z-0 object-contain object-center"
+          />
         </div>
       </div>
     </div>

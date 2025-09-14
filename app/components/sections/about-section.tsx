@@ -39,25 +39,25 @@ export default function AboutUs() {
   return (
     <section
       ref={aboutSectionRef}
-      className="about-section mx-auto h-[60vh] max-w-6xl pb-10 sm:my-[18vh] sm:pb-0"
+      className="about-section mx-auto min-h-[50vh] max-w-6xl py-10 sm:my-[18vh] sm:h-[60vh] sm:pb-0"
     >
-      <div className="mx-auto grid h-full w-full items-center gap-4">
-        <h2 className="section-title h-fit self-end">OUR STORY </h2>
+      <div className="mx-auto grid min-h-full w-full items-center gap-6">
+        <h2 className="section-title h-fit self-end">OUR STORY</h2>
         <div className="grid h-fit w-full grid-cols-1 place-items-center gap-8 md:grid-cols-[1.5fr_1fr]">
           <p className="about-text text-p">
             What began as a passion in a cozy home kitchen has blossomed, with
             over six years of experience, into a celebrated art form. We have
             since had the privilege of sweetening more than 100 unique
             celebrations, meticulously handcrafting each cake to serve as a
-            beautiful and personal centerpiece for life’s most cherished
+            beautiful and personal centerpiece for life&apos;s most cherished
             moments, from grand weddings to intimate milestones.
           </p>
-          <div className="relative hidden h-80 w-96 overflow-hidden rounded-lg sm:block">
+          <div className="relative h-64 w-full overflow-hidden rounded-lg sm:h-80 sm:w-96">
             <Image
               src="/about-us.jpg"
               alt="A glimpse into the cozy, passionate kitchen of Lily Bakery where our story began."
               fill
-              sizes="(max-width: 768px) 90vw, 400px"
+              sizes="(max-width: 768px) 100vw, 400px"
               className="object-cover"
             />
           </div>
