@@ -48,8 +48,55 @@ const noto_Kufi_Arabic = Noto_Kufi_Arabic({
 
 // Metadata for the application
 export const metadata: Metadata = {
-  title: 'Your Bakery',
-  description: 'Your Bakery Description',
+  title: {
+    template: '%s | Lily - Artisan Bakery & Cafe',
+    default: 'Lily - Artisan Bakery & Cafe',
+  },
+  description:
+    'Discover the finest artisan baked goods at Lily. From custom cakes to fresh pastries, we offer a delightful experience for every occasion. Visit our cafe today!',
+  keywords: [
+    'bakery',
+    'cafe',
+    'artisan bread',
+    'custom cakes',
+    'pastries',
+    'gourmet coffee',
+    'Lily bakery',
+  ],
+  openGraph: {
+    title: 'Lily - Artisan Bakery & Cafe',
+    description: 'Freshly baked goods and gourmet coffee in a cozy atmosphere.',
+    url: 'https://lilycake.appwrite.network/', // To be replaced by the user
+    siteName: 'Lily',
+    images: [
+      {
+        url: '/og-image.jpg', // Should be created
+        width: 1200,
+        height: 630,
+        alt: 'A selection of artisan pastries and bread from Lily Bakery',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Lily - Artisan Bakery & Cafe',
+    description:
+      'Experience the best artisan bakery and cafe in town. #LilyBakery',
+    images: ['/twitter-image.jpg'], // Should be created
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   icons: {
     icon: [
       { url: '/favicon.ico' },

@@ -171,7 +171,7 @@ export default function NavigationButtons({
       {!isSubmitClicked && (
         <button
           type="button"
-          className="prev-btn w-24 rounded-lg border-2 border-gray-600 px-4 py-2 text-center font-bold text-gray-600 transition-colors disabled:border-gray-300 disabled:text-gray-300"
+          className="prev-btn flex w-24 items-center justify-center rounded-lg border-2 border-gray-600 px-4 py-2 text-center font-bold text-gray-600 transition-colors disabled:border-gray-300 disabled:text-gray-300"
           disabled={currentIndex === 0}
           onClick={onPrevious}
         >
@@ -193,7 +193,7 @@ export default function NavigationButtons({
       ) : (
         <button
           type="button"
-          className="w-24 rounded-lg bg-gray-600 px-4 py-2 text-center font-bold text-white transition-colors disabled:bg-gray-300"
+          className="flex w-24 items-center justify-center rounded-lg bg-gray-600 px-4 py-2 text-center font-bold text-white transition-colors disabled:bg-gray-300"
           disabled={!isValid}
           onClick={onNext}
         >

@@ -1,43 +1,12 @@
-'use client';
-import HeroSection from './components/sections/hero-section';
-import AboutSection from './components/sections/about-section';
-import Navbar from './components/layouts/nav-bar';
-import CakeFormSection from './components/sections/form-section';
-import HomeReveal from './lib/gsap/home-reveal';
-import Footer from './components/layouts/footer';
-import { masterTimeline } from './lib/gsap/master-timeline';
-import { useGSAP } from '@gsap/react';
-import GallerySection from './components/sections/gallery-section';
+import type { Metadata } from 'next';
+import HomePageClient from './home-page-client';
+
+export const metadata: Metadata = {
+  title: 'Home',
+  description:
+    'Welcome to Lily, your favorite artisan bakery and cafe. Explore our delicious, freshly baked pastries, custom cakes, and gourmet coffee. Visit us today!',
+};
 
 export default function Home() {
-  useGSAP(() => {
-    masterTimeline.play(0);
-  }, []);
-
-  return (
-    <main>
-      <Navbar />
-      {/* Hero Section */}
-      <section className="panel">
-        <HomeReveal />
-        <HeroSection />
-      </section>
-
-      {/* About Section */}
-      <section className="panel bg-white">
-        <div className="px-4 sm:px-6 lg:px-8">
-          <AboutSection />
-        </div>
-      </section>
-
-      {/* Gallery Section */}
-      <GallerySection />
-
-      {/* Form Section */}
-      <CakeFormSection />
-
-      {/* Footer */}
-      <Footer />
-    </main>
-  );
+  return <HomePageClient />;
 }

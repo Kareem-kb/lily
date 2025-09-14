@@ -11,11 +11,11 @@ export default function Footer() {
             href="https://www.instagram.com/lilycake.2/"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Instagram"
+            aria-label="Follow Lily Bakery on Instagram"
           >
             <Image
               src="/icons/instagram-icon.svg"
-              alt="Instagram Icon"
+              alt="Follow Lily Bakery on Instagram"
               width={25}
               height={25}
               className="h-6 w-6"
@@ -25,11 +25,11 @@ export default function Footer() {
             href="https://www.tiktok.com/@lilycake2?_t=ZN-8yUvC59XlGI&_r=1"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="TikTok"
+            aria-label="Follow Lily Bakery on TikTok"
           >
             <Image
               src="/icons/tiktok-icon.svg"
-              alt="TikTok Icon"
+              alt="Follow Lily Bakery on TikTok"
               width={25}
               height={25}
               className="h-6 w-6"
@@ -39,11 +39,11 @@ export default function Footer() {
             href="https://wa.me/+966558194872?text=Hi%20Lily%20Cake!%20I%20would%20like%20to%20order%20a%20cake."
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="WhatsApp"
+            aria-label="Contact Lily Bakery on WhatsApp"
           >
             <Image
               src="/icons/whatsapp-icon.svg"
-              alt="WhatsApp Icon"
+              alt="Contact Lily Bakery on WhatsApp"
               width={25}
               height={25}
               className="h-6 w-6"
