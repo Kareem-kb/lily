@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import InstagramIcon from '../../../public/icons/instagram-icon.svg';
-import TiktokIcon from '../../../public/icons/tiktok-icon.svg';
-import WhatsappIcon from '../../../public/icons/whatsapp-icon.svg';
+import InstagramIcon from '../icons/instagram-icon.svg';
+import TiktokIcon from '../icons/tiktok-icon.svg';
+import WhatsappIcon from '../icons/whatsapp-icon.svg';
 
 export default function Footer() {
   return (
