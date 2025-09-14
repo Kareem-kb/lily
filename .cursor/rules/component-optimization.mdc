@@ -1,0 +1,72 @@
+---
+globs: *.tsx,*.ts
+description: React component optimization and code reduction patterns
+---
+
+# Component Optimization Rules
+
+## Code Reduction Patterns
+
+### Early Returns
+
+- Use early returns to reduce nesting: `if (!condition) return;`
+- Combine multiple conditions in single if statements
+- Return early from functions to avoid else blocks
+
+### Ref Optimization
+
+- Use non-null assertion when ref is guaranteed: `useRef<HTMLDivElement>(null)`
+- Remove unnecessary null checks when ref is always present
+- Combine ref initialization with usage
+
+### State Management
+
+- Use minimal state - combine related states when possible
+- Use functional updates: `setState(prev => ({ ...prev, newValue }))`
+- Avoid unnecessary state variables
+
+### Event Handlers
+
+- Inline simple handlers when they don't need reuse
+- Use arrow functions for one-liners
+- Combine related logic in single handlers
+
+## Performance Patterns
+
+### Memoization
+
+- Use `useMemo` for expensive calculations
+- Use `useCallback` for functions passed as props
+- Avoid over-memoization of simple values
+
+### Effect Dependencies
+
+- Minimize dependency arrays
+- Use refs for values that don't need to trigger re-renders
+- Combine related effects when possible
+
+### Component Structure
+
+- Extract reusable logic into custom hooks
+- Keep components under 50 lines when possible
+- Use composition over complex prop drilling
+
+## Code Style
+
+### Imports
+
+- Group imports: React, third-party, local
+- Use named imports when possible
+- Remove unused imports
+
+### Variable Naming
+
+- Use descriptive names: `isSubmitClicked` not `clicked`
+- Use consistent prefixes: `handle*` for event handlers
+- Use boolean prefixes: `is*`, `has*`, `should*`
+
+### Comments
+
+- Remove obvious comments
+- Keep only complex logic explanations
+- Use JSDoc for public APIs
