@@ -17,6 +17,8 @@ body {
   font-family: var(--font-nunito_Sans), sans-serif;
   font-weight: 500;
   background-color: #fff;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 section {
@@ -53,14 +55,12 @@ button {
   max-width: min(65ch, 100%);
   hyphens: auto;
   color: var(--color-bakery-black);
-  text-align: justify;
-  text-wrap: balance;
+  text-align: left;
+  text-wrap: pretty;
 
   @media (max-width: 768px) {
     max-width: 100%;
-    text-wrap: pretty;
     line-height: 1.6;
-    text-align: left;
     font-size: clamp(0.95rem, 4vw, 1.1rem);
   }
 }

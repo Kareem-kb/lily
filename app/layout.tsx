@@ -48,6 +48,7 @@ const noto_Kufi_Arabic = Noto_Kufi_Arabic({
 
 // Metadata for the application
 export const metadata: Metadata = {
+  metadataBase: new URL('https://lilycake.appwrite.network/'),
   title: {
     template: '%s | Lily - Artisan Bakery & Cafe',
     default: 'Lily - Artisan Bakery & Cafe',
