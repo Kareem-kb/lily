@@ -23,15 +23,21 @@ export default function Home() {
         <HeroSection />
       </section>
 
-      {/* All Other Sections Combined */}
+      {/* About Section */}
       <section className="panel bg-white">
         <div className="px-4 sm:px-6 lg:px-8">
           <AboutSection />
         </div>
-        <GallerySection />
-        <CakeFormSection />
-        <Footer />
       </section>
+
+      {/* Gallery Section */}
+      <GallerySection />
+
+      {/* Form Section */}
+      <CakeFormSection />
+
+      {/* Footer */}
+      <Footer />
     </main>
   );
 }

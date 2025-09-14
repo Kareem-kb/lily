@@ -8,5 +8,6 @@ export interface CakeOrder {
   name: string;
   email: string;
   phone: string;
-  requests?: string;
+  requests: string;
+  delivery_address: string;
 }

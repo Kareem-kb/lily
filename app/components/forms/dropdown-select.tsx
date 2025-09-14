@@ -16,6 +16,7 @@ interface DropdownProps {
   value?: string;
   onChange?: (e: { target: { name: string; value: string } }) => void; // Simplified event for custom components
   preview?: boolean;
+  disabled?: boolean;
 }
 
 export function Dropdown({
@@ -26,6 +27,7 @@ export function Dropdown({
   value,
   onChange,
   preview = false,
+  disabled = false,
 }: DropdownProps) {
   // This state holds the currently selected value.
   const [selectedValue, setSelectedValue] = useState(value || '');
@@ -53,8 +55,11 @@ export function Dropdown({
       <span className="text-xs font-medium">{label}</span>
       <div className={preview ? 'mt-6' : ''}>
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button className="flex w-full items-center justify-between px-3 py-2 text-left font-bold text-black">
+          <DropdownMenuTrigger asChild disabled={disabled}>
+            <button
+              className="flex w-full items-center justify-between px-3 py-2 text-left font-bold text-black disabled:cursor-not-allowed disabled:text-gray-400"
+              disabled={disabled}
+            >
               {selectedLabel}
               {/* Optional: Add a chevron icon for better UX */}
             </button>

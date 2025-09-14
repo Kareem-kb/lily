@@ -8,6 +8,7 @@ interface InputFieldProps {
   value?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   preview?: boolean;
+  disabled?: boolean;
 }
 export function InputField({
   label,
@@ -15,6 +16,7 @@ export function InputField({
   name,
   onChange,
   preview = false,
+  disabled = false,
 }: InputFieldProps) {
   return (
     <label className="flex flex-col gap-1 p-2">
@@ -24,7 +26,8 @@ export function InputField({
         placeholder={placeholder}
         name={name}
         onChange={onChange}
-        className={`border-0 text-base font-bold text-black placeholder-black transition-all duration-700 placeholder:transition-colors focus:placeholder-gray-400 focus:outline-none ${preview ? 'mt-6' : ''}`}
+        disabled={disabled}
+        className={`border-0 text-base font-bold text-black placeholder-black transition-all duration-700 placeholder:transition-colors focus:placeholder-gray-400 focus:outline-none disabled:bg-white disabled:text-gray-400 ${preview ? 'mt-6' : ''}`}
       />
     </label>
   );
@@ -38,6 +41,7 @@ interface TextAreaProps {
   value?: string;
   onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   preview?: boolean;
+  disabled?: boolean;
 }
 export function TextArea({
   label,
@@ -45,6 +49,7 @@ export function TextArea({
   placeholder,
   onChange,
   preview = false,
+  disabled = false,
 }: TextAreaProps) {
   return (
     <label className="flex flex-col gap-1 p-2">
@@ -54,7 +59,8 @@ export function TextArea({
         name={name}
         placeholder={placeholder}
         onChange={onChange}
-        className={`resize-none border-0 text-base font-bold text-black placeholder-black transition-all duration-700 placeholder:transition-colors focus:placeholder-gray-400 focus:outline-none ${preview ? 'mt-6' : ''}`}
+        disabled={disabled}
+        className={`resize-none border-0 text-base font-bold text-black placeholder-black transition-all duration-700 placeholder:transition-colors focus:placeholder-gray-400 focus:outline-none disabled:bg-white disabled:text-gray-400 ${preview ? 'mt-6' : ''}`}
       />
     </label>
   );
@@ -69,6 +75,7 @@ interface FileUploadProps {
   value?: File[];
   onChange?: (e: { target: { name: string; value: File[] } }) => void;
   preview?: boolean;
+  disabled?: boolean;
 }
 export function FileUpload({
   label,
@@ -76,6 +83,7 @@ export function FileUpload({
   value = [],
   onChange,
   preview = false,
+  disabled = false,
 }: FileUploadProps) {
   const addFiles = (e: ChangeEvent<HTMLInputElement>) => {
     const newFiles = Array.from(e.target.files ?? []);
@@ -108,7 +116,7 @@ export function FileUpload({
     <label className="flex flex-col gap-1 p-2">
       <span className="text-xs font-medium">{label}</span>
       <div
-        className={`flex w-full flex-col gap-2 rounded-lg border-2 border-dashed border-gray-300 p-3 transition-all duration-700 ${preview ? 'mt-6' : ''}`}
+        className={`flex w-full flex-col gap-2 rounded-lg border-2 border-dashed border-gray-300 p-3 transition-all duration-700 ${preview ? 'mt-6' : ''} ${disabled ? 'cursor-not-allowed bg-gray-100' : ''}`}
       >
         <input
           type="file"
@@ -117,7 +125,7 @@ export function FileUpload({
           name={name}
           onChange={addFiles}
           className="sr-only"
-          disabled={value.length >= 3}
+          disabled={value.length >= 3 || disabled}
         />
         {value.map((file, i) => (
           <div
@@ -134,7 +142,8 @@ export function FileUpload({
                 e.stopPropagation();
                 removeFile(i);
               }}
-              className="ml-2 text-red-500 hover:text-red-700"
+              disabled={disabled}
+              className="ml-2 text-red-500 hover:text-red-700 disabled:cursor-not-allowed disabled:text-gray-400"
             >
               ×
             </button>
@@ -142,8 +151,9 @@ export function FileUpload({
         ))}
         {value.length < 3 && (
           <div
-            className="flex cursor-pointer items-center justify-center py-4 text-sm text-gray-400 transition-colors"
+            className={`flex cursor-pointer items-center justify-center py-4 text-sm text-gray-400 transition-colors ${disabled ? 'cursor-not-allowed' : ''}`}
             onClick={() =>
+              !disabled &&
               (
                 document.querySelector(
                   `input[name="${name}"]`

@@ -143,13 +143,13 @@ export default function ImageGallery() {
   return (
     <section className="fade-bg overflow-hidden">
       <div className="px-4 sm:px-6 lg:px-8">
-        <div className="mb-24 flex items-center gap-1">
+        <div className="mt-10 flex items-center gap-1 sm:mb-24">
           <h2 className="section-title">OUR CUSTOM CREATIONS </h2>
         </div>
       </div>
       <div
         ref={containerRef}
-        className="sticky top-0 grid h-[100dvh] w-full grid-cols-4 gap-4 px-4 py-6 sm:grid-cols-3 sm:px-6 md:grid-cols-[repeat(13,minmax(0,1fr))] lg:px-8"
+        className="grid h-[100dvh] w-full grid-cols-4 gap-4 px-4 py-6 sm:grid-cols-3 sm:px-6 md:grid-cols-[repeat(13,minmax(0,1fr))] lg:px-8"
       >
         {imageData.map((image, index) => (
           <div key={index} className={`flex h-full ${image.cellClasses}`}>
@@ -173,7 +173,7 @@ export default function ImageGallery() {
           </div>
         ))}
         <span
-          className="gallery-text absolute inset-0 z-10 flex h-full w-full items-center justify-center text-center text-7xl font-thin text-white opacity-0"
+          className="gallery-text mx-2 absolute inset-0 z-10 flex h-full w-full items-center justify-center text-center text-4xl sm:text-7xl font-thin text-white opacity-0"
           style={{ fontFamily: 'var(--font-meow_Script), cursive' }}
         >
           A unique work of art <br /> just for you

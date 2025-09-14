@@ -39,7 +39,7 @@ export default function AboutUs() {
   return (
     <section
       ref={aboutSectionRef}
-      className="about-section mx-auto my-[18vh] h-[60vh] max-w-6xl"
+      className="about-section mx-auto sm:my-[18vh] h-[60vh] pb-10 sm:pb-0 max-w-6xl"
     >
       <div className="mx-auto grid h-full w-full items-center gap-4">
         <h2 className="section-title h-fit self-end">OUR STORY </h2>
@@ -52,7 +52,7 @@ export default function AboutUs() {
             beautiful and personal centerpiece for life’s most cherished
             moments, from grand weddings to intimate milestones.
           </p>
-          <div className="relative h-80 w-96 overflow-hidden rounded-lg">
+          <div className="relative hidden h-80 w-96 overflow-hidden rounded-lg sm:block">
             <Image
               src="/about-us.jpg"
               alt="About Us"

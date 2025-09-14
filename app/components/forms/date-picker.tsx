@@ -12,11 +12,13 @@ export function DatePicker({
   preview = false,
   value,
   onChange,
+  disabled,
 }: {
   name: string;
   preview?: boolean;
   value?: string;
   onChange?: (e: { target: { value: string } }) => void;
+  disabled?: boolean;
 }) {
   const [open, setOpen] = React.useState(false);
 
@@ -40,10 +42,10 @@ export function DatePicker({
     <div className="flex flex-col p-2">
       <span className="text-xs font-medium">And when is the big day?</span>
       <input type="hidden" name={name} value={value || ''} />
-      <Popover open={open} onOpenChange={setOpen}>
+      <Popover open={open} onOpenChange={disabled ? () => {} : setOpen}>
         <PopoverTrigger asChild>
           <div
-            className={`cursor-pointer border-0 text-base font-bold transition-all duration-700 focus:outline-none ${preview ? 'mt-6' : ''}`}
+            className={`cursor-pointer border-0 text-base font-bold transition-all duration-700 focus:outline-none ${preview ? 'mt-6' : ''} ${disabled ? 'cursor-not-allowed text-gray-400' : ''}`}
           >
             {date ? (
               <span className={open ? 'text-gray-400' : 'text-black'}>

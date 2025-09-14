@@ -16,6 +16,7 @@ export default function ItemsList() {
   const [pending, setPending] = useState(false);
   const [formData, setFormData] = useState<Record<string, string | File[]>>({});
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
   const mainContainerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
@@ -82,15 +83,11 @@ export default function ItemsList() {
       const result = await cakeForm(finalFormData);
 
       if (result.success) {
-        // Reset form on success
-        setFormData({});
-        setCurrentIndex(0);
-        alert('Order submitted successfully!');
+        // Set success state first, reset form after animation
+        setSubmitSuccess(true);
       }
     } catch (error) {
       console.error('Submission error:', error);
-      alert('Failed to submit order. Please try again.');
-    } finally {
       setPending(false);
     }
   };
@@ -130,6 +127,7 @@ export default function ItemsList() {
                           <Component
                             {...(props as Record<string, unknown>)}
                             preview={index === currentIndex + 1}
+                            disabled={pending}
                             value={
                               formData[props.name] ||
                               (props.name === 'images' ? [] : '')
@@ -147,6 +145,7 @@ export default function ItemsList() {
               <NavigationButtons
                 currentIndex={currentIndex}
                 totalQuestions={questionsList.length}
+                submitSuccess={submitSuccess}
                 isPending={pending}
                 onPrevious={() => gotoStep(currentIndex - 1)}
                 onNext={() => gotoStep(currentIndex + 1)}

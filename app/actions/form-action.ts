@@ -5,14 +5,6 @@ import { createDocument } from '../lib/database';
 
 export async function cakeForm(formData: CakeOrder) {
   try {
-    console.log('cakeForm data ➜', formData);
-    console.log('delivery_date value:', formData.delivery_date);
-    console.log('delivery_date type:', typeof formData.delivery_date);
-
-    // Validate and convert date properly
-    if (!formData.delivery_date) {
-      throw new Error('Delivery date is required');
-    }
 
     // Check if it's already a valid date string
     const dateObj = new Date(formData.delivery_date);
@@ -26,9 +18,7 @@ export async function cakeForm(formData: CakeOrder) {
       ...formData,
       delivery_date: deliveryDate,
     };
-
-    console.log('Final data for database:', dataForDatabase);
-
+    
     await createDocument(dataForDatabase);
     return {
       success: true,
