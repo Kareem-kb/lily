@@ -42,9 +42,13 @@ export default function NavBar() {
       <div className="mx-auto px-4 sm:px-6 lg:px-6">
         <div className="flex h-16 justify-between">
           <div className="navLogo flex items-center">
-            <Link href="/" className="flex h-full items-center drop-shadow-2xl">
+            <Link
+              href="/"
+              className="flex h-full items-center drop-shadow-2xl"
+              aria-label="Go to homepage"
+            >
               <Image
-                alt="Bakery Logo"
+                alt="Lily Artisan Bakery & Cafe Logo"
                 src="/lily-logo.png"
                 className="h-full rounded-lg md:w-[140px]"
                 width={120}

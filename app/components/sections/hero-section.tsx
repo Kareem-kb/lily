@@ -108,7 +108,7 @@ export default function Hero() {
           <div className="relative h-[70vw] w-full sm:h-full">
             <Image
               src="/lily-cake-img-1-2.jpg"
-              alt="Hero cake"
+              alt="A beautiful, custom-decorated cake from Lily Bakery, perfect for any celebration."
               fill
               sizes="(max-width: 640px) 70vw, (max-width: 768px) 80vw, 40vw"
               priority

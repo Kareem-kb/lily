@@ -10,64 +10,64 @@ gsap.registerPlugin(ScrollTrigger);
 const imageData = [
   {
     src: '/gallary/insta-1.jpg',
-    alt: 'Gallery image 1',
+    alt: 'Elegant multi-tiered wedding cake with floral decorations.',
     cellClasses: 'items-start md:col-span-2',
   },
   {
     src: '/gallary/insta-2.jpg',
-    alt: 'Gallery image 2',
+    alt: 'Vibrant and colorful birthday cake with custom character designs.',
     cellClasses: 'items-end md:col-span-2',
   },
   {
     src: '/gallary/insta-3.jpg',
-    alt: 'Gallery image 3',
+    alt: 'A close-up of a rustic, semi-naked cake adorned with fresh berries.',
     cellClasses: 'items-start md:col-span-3 md:justify-end',
     imageClasses: 'md:w-2/3',
   },
   {
     src: '/gallary/insta-4.jpg',
-    alt: 'Gallery image 4',
+    alt: 'Artisanal cupcakes with intricate frosting details.',
     cellClasses: 'items-start md:col-span-2',
   },
   {
     src: '/gallary/insta-5.jpg',
-    alt: 'Gallery image 5',
+    alt: 'A modern, geometric-patterned cake for a corporate event.',
     cellClasses: 'items-end md:col-span-2',
   },
   {
     src: '/gallary/insta-6.jpg',
-    alt: 'Gallery image 6',
+    alt: "A whimsical, fairytale-themed cake for a child's party.",
     cellClasses: 'items-start md:col-span-2',
   },
   {
     src: '/gallary/insta-7.jpg',
-    alt: 'Gallery image 7',
+    alt: 'A selection of delicate French macarons in various flavors.',
     cellClasses: 'items-start md:col-span-2',
   },
   {
     src: '/gallary/insta-8.jpg',
-    alt: 'Gallery image 8',
+    alt: 'A classic chocolate drip cake topped with gourmet chocolates.',
     cellClasses: 'items-end md:col-span-2',
   },
   {
     src: '/gallary/insta-9.jpg',
-    alt: 'Gallery image 9',
+    alt: 'A beautiful baby shower cake with pastel colors and cute decorations.',
     cellClasses: 'items-end md:col-span-2',
   },
   {
     src: '/gallary/insta-10.jpg',
-    alt: 'Gallery image 10',
+    alt: 'An assortment of freshly baked pastries and croissants.',
     cellClasses: 'items-start md:col-span-3 md:justify-end',
     imageClasses: 'md:w-2/3',
   },
   {
     src: '/gallary/insta-11.jpg',
-    alt: 'Gallery image 11',
+    alt: 'A sophisticated cake for an anniversary, with gold leaf accents.',
     cellClasses: 'items-end md:col-span-2',
   },
   {
     src: '/gallary/insta-12.jpg',
-    alt: 'Gallery image 12',
+    alt: 'Custom-designed cookies for a special occasion.',
     cellClasses: 'items-end md:col-span-2',
   },
 ];
@@ -152,7 +152,7 @@ export default function ImageGallery() {
         className="grid h-[100dvh] w-full grid-cols-4 gap-4 px-4 py-6 sm:grid-cols-3 sm:px-6 md:grid-cols-[repeat(13,minmax(0,1fr))] lg:px-8"
       >
         {imageData.map((image, index) => (
-          <div key={index} className={`flex h-full ${image.cellClasses}`}>
+          <div key={image.src} className={`flex h-full ${image.cellClasses}`}>
             <div
               className={`image-cell relative ${
                 image.imageClasses || 'w-full'
@@ -173,7 +173,7 @@ export default function ImageGallery() {
           </div>
         ))}
         <span
-          className="gallery-text mx-2 absolute inset-0 z-10 flex h-full w-full items-center justify-center text-center text-4xl sm:text-7xl font-thin text-white opacity-0"
+          className="gallery-text absolute inset-0 z-10 mx-2 flex h-full w-full items-center justify-center text-center text-4xl font-thin text-white opacity-0 sm:text-7xl"
           style={{ fontFamily: 'var(--font-meow_Script), cursive' }}
         >
           A unique work of art <br /> just for you

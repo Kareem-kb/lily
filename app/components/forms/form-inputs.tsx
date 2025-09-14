@@ -127,9 +127,9 @@ export function FileUpload({
           className="sr-only"
           disabled={value.length >= 3 || disabled}
         />
-        {value.map((file, i) => (
+        {value.map((file) => (
           <div
-            key={i}
+            key={`${file.name}-${file.size}-${file.lastModified}`}
             className="flex items-center justify-between rounded bg-gray-50 px-3 py-2"
           >
             <span className="flex-1 truncate text-sm font-medium text-gray-700">
@@ -140,7 +140,15 @@ export function FileUpload({
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                removeFile(i);
+                const fileIndex = value.findIndex(
+                  (f) =>
+                    f.name === file.name &&
+                    f.size === file.size &&
+                    f.lastModified === file.lastModified
+                );
+                if (fileIndex > -1) {
+                  removeFile(fileIndex);
+                }
               }}
               disabled={disabled}
               className="ml-2 text-red-500 hover:text-red-700 disabled:cursor-not-allowed disabled:text-gray-400"
