@@ -14,7 +14,7 @@ export default function Footer() {
             aria-label="Follow Lily Bakery on Instagram"
           >
             <Image
-              src="/icons/instagram-icon.svg"
+              src="/instagramIcon.svg"
               alt="Follow Lily Bakery on Instagram"
               width={25}
               height={25}
@@ -28,7 +28,7 @@ export default function Footer() {
             aria-label="Follow Lily Bakery on TikTok"
           >
             <Image
-              src="/icons/tiktok-icon.svg"
+              src="/tiktokIcon.svg"
               alt="Follow Lily Bakery on TikTok"
               width={25}
               height={25}
@@ -42,7 +42,7 @@ export default function Footer() {
             aria-label="Contact Lily Bakery on WhatsApp"
           >
             <Image
-              src="/icons/whatsapp-icon.svg"
+              src="/whatsappIcon.svg"
               alt="Contact Lily Bakery on WhatsApp"
               width={25}
               height={25}
