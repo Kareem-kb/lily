@@ -1,7 +1,5 @@
 import Link from 'next/link';
-import InstagramIcon from '../icons/instagram-icon.svg';
-import TiktokIcon from '../icons/tiktok-icon.svg';
-import WhatsappIcon from '../icons/whatsapp-icon.svg';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -15,7 +13,13 @@ export default function Footer() {
             rel="noopener noreferrer"
             aria-label="Follow Lily Bakery on Instagram"
           >
-            <InstagramIcon className="h-6 w-6" />
+            <Image
+              src="/icons/instagram-icon.svg"
+              alt="Follow Lily Bakery on Instagram"
+              width={25}
+              height={25}
+              className="h-6 w-6"
+            />
           </Link>
           <Link
             href="https://www.tiktok.com/@lilycake2?_t=ZN-8yUvC59XlGI&_r=1"
@@ -23,7 +27,13 @@ export default function Footer() {
             rel="noopener noreferrer"
             aria-label="Follow Lily Bakery on TikTok"
           >
-            <TiktokIcon className="h-6 w-6" />
+            <Image
+              src="/icons/tiktok-icon.svg"
+              alt="Follow Lily Bakery on TikTok"
+              width={25}
+              height={25}
+              className="h-6 w-6"
+            />
           </Link>
           <a
             href="https://wa.me/+966558194872?text=Hi%20Lily%20Cake!%20I%20would%20like%20to%20order%20a%20cake."
@@ -31,11 +41,17 @@ export default function Footer() {
             rel="noopener noreferrer"
             aria-label="Contact Lily Bakery on WhatsApp"
           >
-            <WhatsappIcon className="h-6 w-6" />
+            <Image
+              src="/icons/whatsapp-icon.svg"
+              alt="Contact Lily Bakery on WhatsApp"
+              width={25}
+              height={25}
+              className="h-6 w-6"
+            />
           </a>
         </div>
       </div>
-      <div className="text-sm">© 2025 Lily App. All rights reserved.</div>
+      <div className="text-sm">&copy; 2025 Lily App. All rights reserved.</div>
     </footer>
   );
 }
