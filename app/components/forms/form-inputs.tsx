@@ -132,7 +132,7 @@ export function FileUpload({
             key={`${file.name}-${file.size}-${file.lastModified}`}
             className="flex items-center justify-between rounded bg-gray-50 px-3 py-2"
           >
-            <span className="flex-1 truncate text-sm font-medium text-gray-700">
+            <span className="flex-1 min-w-0 truncate text-sm font-medium text-gray-700">
               {file.name}
             </span>
             <button

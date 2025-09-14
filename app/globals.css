@@ -205,3 +205,9 @@ button {
     @apply bg-background text-foreground;
   }
 }
+
+/* Defensive CSS to prevent iOS word-breaking issues */
+body, p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: normal;
+  word-break: normal;
+}
