@@ -107,7 +107,7 @@ export default function Hero() {
         <div className="h:fit flex sm:h-full sm:basis-1/2">
           <div className="relative h-[70vw] w-full sm:h-full">
             <Image
-              src="/lily-cake-img-1-2.jpg"
+              src="/lily-hero-img.jpg"
               alt="A beautiful, custom-decorated cake from Lily Bakery, perfect for any celebration."
               fill
               sizes="(max-width: 640px) 70vw, (max-width: 768px) 80vw, 40vw"
