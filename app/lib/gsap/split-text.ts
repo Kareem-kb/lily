@@ -32,7 +32,7 @@ export async function slideWords(selector: string) {
 
 export async function createSplitText(
   selector: string | Element,
-  options: any = {}
+  options: SplitText.Vars = { type: 'lines words' }
 ) {
   await document.fonts.ready;
   return new SplitText(selector, options);

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { addDays } from 'date-fns';
+import { addDays, format } from 'date-fns';
 import { Calendar } from '@/app/components/shadcn/calendar';
 import {
   Popover,
@@ -23,15 +23,14 @@ export function DatePicker({
   const [open, setOpen] = React.useState(false);
 
   // Convert string value to Date
-  const date = value ? new Date(value) : undefined;
+  const date = value ? new Date(`${value}T00:00:00`) : undefined;
 
   const today = new Date();
+  today.setHours(0, 0, 0, 0);
   const maxDate = addDays(today, 60);
 
   const handleDateSelect = (selectedDate: Date | undefined) => {
-    const dateString = selectedDate
-      ? selectedDate.toISOString().split('T')[0]
-      : '';
+    const dateString = selectedDate ? format(selectedDate, 'yyyy-MM-dd') : '';
 
     // Call onChange with the expected format
     onChange?.({ target: { value: dateString } });
