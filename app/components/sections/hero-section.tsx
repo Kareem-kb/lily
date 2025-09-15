@@ -5,25 +5,20 @@ import { SplitText } from 'gsap/SplitText';
 import Image from 'next/image';
 import { masterTimeline } from '@/app/lib/gsap/master-timeline';
 import { slideWords } from '@/app/lib/gsap/split-text';
-import { useEffect, useState } from 'react';
+import { useRef } from 'react';
 
 gsap.registerPlugin(SplitText);
 
 export default function Hero() {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const subtitleRef = useRef<HTMLParagraphElement>(null);
 
   useGSAP(() => {
-    if (!isClient) return;
-
     const tl = gsap.timeline({ id: 'hero' });
 
-    const titleElement = document.querySelector('.hero-title');
-    const subtitleElement = document.querySelector('.hero-subtitle');
-    
+    const titleElement = titleRef.current;
+    const subtitleElement = subtitleRef.current;
+
     if (!titleElement || !subtitleElement) return;
 
     const titleSplit = SplitText.create(titleElement, {
@@ -75,13 +70,13 @@ export default function Hero() {
     tl.addLabel('heroDone');
 
     masterTimeline.add(tl, 'revealDone-=0.9');
-  }, [isClient]);
+  }, []);
 
   return (
     <div className="hero-section min-h-screen">
       <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col justify-end gap-6 px-4 sm:flex-row sm:px-6">
         <div className="flex flex-col justify-center gap-4 text-[90%] sm:basis-1/2 sm:text-base">
-          <h1 className="hero-title heading-section">
+          <h1 className="hero-title heading-section" ref={titleRef}>
             <span className="block sm:inline">Cakes That Make</span>
             <span className="block sm:inline">
               Moments Unforgettable&nbsp;
@@ -97,7 +92,7 @@ export default function Hero() {
               </span>
             </span>
           </h1>
-          <p className="hero-subtitle text-p">
+          <p className="hero-subtitle text-p" ref={subtitleRef}>
             From dream weddings to unforgettable birthdays, we create
             personalized cakes that taste as incredible.
           </p>

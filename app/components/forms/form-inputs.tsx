@@ -1,4 +1,4 @@
-import { type ChangeEvent } from 'react';
+import { type ChangeEvent, useRef } from 'react';
 
 // ---------------- InputField ----------------
 interface InputFieldProps {
@@ -85,6 +85,8 @@ export function FileUpload({
   preview = false,
   disabled = false,
 }: FileUploadProps) {
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const addFiles = (e: ChangeEvent<HTMLInputElement>) => {
     const newFiles = Array.from(e.target.files ?? []);
 
@@ -119,6 +121,7 @@ export function FileUpload({
         className={`flex w-full flex-col gap-2 rounded-lg border-2 border-dashed border-gray-300 p-3 transition-all duration-700 ${preview ? 'mt-6' : ''} ${disabled ? 'cursor-not-allowed bg-gray-100' : ''}`}
       >
         <input
+          ref={inputRef}
           type="file"
           accept="image/*"
           multiple
@@ -160,14 +163,11 @@ export function FileUpload({
         {value.length < 3 && (
           <div
             className={`flex cursor-pointer items-center justify-center py-4 text-sm text-gray-400 transition-colors ${disabled ? 'cursor-not-allowed' : ''}`}
-            onClick={() =>
-              !disabled &&
-              (
-                document.querySelector(
-                  `input[name="${name}"]`
-                ) as HTMLInputElement
-              )?.click()
-            }
+            onClick={(e) => {
+              if (disabled) return;
+              e.preventDefault();
+              inputRef.current?.click();
+            }}
           >
             <div className="text-center">
               <div>+ Add {value.length === 0 ? 'images' : 'more images'}</div>

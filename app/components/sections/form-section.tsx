@@ -18,6 +18,7 @@ export default function ItemsList() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const mainContainerRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   useGSAP(() => {
     gsap.to(mainContainerRef.current, {
@@ -49,7 +50,9 @@ export default function ItemsList() {
     setFormData((prev) => ({ ...prev, [name]: value }));
 
   const gotoStep = (next: number) => {
-    const state = Flip.getState('.step-animation');
+    if (!mainContainerRef.current) return;
+    const steps = gsap.utils.toArray<HTMLDivElement>('.step-animation');
+    const state = Flip.getState(steps);
     setCurrentIndex(next);
     requestAnimationFrame(() => {
       Flip.from(state, {
@@ -92,11 +95,11 @@ export default function ItemsList() {
     }
   };
 
-  const submitForm = () => document.querySelector('form')?.requestSubmit();
+  const submitForm = () => formRef.current?.requestSubmit();
 
   return (
     <section
-      className="form-section flex h-screen flex-col justify-center gap-20 bg-[url('/icons/lily-pattern.svg')] bg-repeat"
+      className="form-section flex h-screen flex-col justify-center gap-20 bg-[url('/lily-pattern.svg')] bg-repeat"
       style={{ backgroundSize: '120px 122px' }}
       ref={mainContainerRef}
     >
@@ -109,6 +112,7 @@ export default function ItemsList() {
         <div className="flex w-full justify-center">
           <div className="flex h-[66vh] max-w-lg flex-col gap-6 p-4">
             <form
+              ref={formRef}
               onSubmit={handleSubmit}
               className="flex h-full w-full flex-col justify-end overflow-hidden rounded-lg bg-white shadow-[0px_4px_45px_9px_rgba(51,_65,_85,_0.12)]"
             >

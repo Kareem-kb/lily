@@ -2,7 +2,7 @@
 
 import { useGSAP } from '@gsap/react';
 import Image from 'next/image';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -75,80 +75,109 @@ const imageData = [
 export default function ImageGallery() {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleResize = () => {
-      ScrollTrigger.refresh();
-    };
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
   useGSAP(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
     const imageCells = gsap.utils.toArray<HTMLDivElement>('.image-cell');
-    const timeline = gsap
-      .timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top top',
-          end: '+=1000', // A longer scroll distance for a more graceful animation.
-          pin: true,
-          scrub: 1, // Smoothly links the animation progress to the scrollbar.
-        },
-      })
-      .to(
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: container,
+        start: 'top top',
+        end: '+=1000',
+        pin: true,
+        scrub: 1,
+      },
+    });
+
+    const buildAnimation = () => {
+      // Clear the timeline on every refresh to ensure it's built from a clean state
+      tl.clear();
+
+      // Batch read DOM properties to avoid layout thrashing
+      const containerRect = container.getBoundingClientRect();
+      const cellRects = imageCells.map((cell) => cell.getBoundingClientRect());
+
+      // Re-add tweens with fresh values
+      tl.to(
         '.fade-bg',
         {
           backgroundColor: '#303030',
           ease: 'power2.inOut',
         },
         0
-      )
-      .to(
+      ).to(
         '.gallery-text',
         {
           opacity: 1,
           ease: 'power2.inOut',
           duration: 0.2,
         },
-        '>-0.1'
+        '<0.1'
       );
 
-    imageCells.forEach((cell, index) => {
-      const containerRect = containerRef.current!.getBoundingClientRect();
-      const cellRect = cell.getBoundingClientRect();
+      imageCells.forEach((cell, index) => {
+        gsap.set(cell, { willChange: 'transform' });
+        const cellRect = cellRects[index];
+        const x =
+          containerRect.width / 2 -
+          (cellRect.left - containerRect.left) -
+          cellRect.width / 2;
+        const y =
+          containerRect.height / 2 -
+          (cellRect.top - containerRect.top) -
+          cellRect.height / 2;
 
-      const x =
-        containerRect.width / 2 -
-        (cellRect.left - containerRect.left) -
-        cellRect.width / 2;
-      const y =
-        containerRect.height / 2 -
-        (cellRect.top - containerRect.top) -
-        cellRect.height / 2;
-
-      // Check if this is the last image to apply a special animation.
-      if (index === imageCells.length - 1) {
-        // Set initial filter state
-        gsap.set(cell, { filter: 'brightness(1)' });
-
-        timeline.to(
-          cell,
-          { x, y, scale: 2, ease: 'power2.inOut', filter: 'brightness(0.75)' },
-          0
-        );
-        // Find the overlay and animate its background color to create the mask effect.
-        const overlay = cell.querySelector('.image-overlay');
-        if (overlay) {
-          timeline.to(overlay, { ease: 'power2.inOut' }, 0);
+        if (index === imageCells.length - 1) {
+          gsap.set(cell, { filter: 'brightness(1)' });
+          tl.to(
+            cell,
+            {
+              x,
+              y,
+              scale: 2,
+              ease: 'power2.inOut',
+              filter: 'brightness(0.75)',
+            },
+            0
+          );
+          const overlay = cell.querySelector('.image-overlay');
+          if (overlay) {
+            tl.to(overlay, { ease: 'power2.inOut' }, 0);
+          }
+        } else {
+          tl.to(cell, { x, y, scale: 1.1, ease: 'power2.inOut' }, 0);
         }
-      } else {
-        // Apply the standard animation to all other images.
-        timeline.to(cell, { x, y, scale: 1.1, ease: 'power2.inOut' }, 0);
-      }
-    });
+      });
+    };
+
+    // Attach the build function to ScrollTrigger's refresh event
+    ScrollTrigger.addEventListener('refresh', buildAnimation);
+
+    // Run it once for the initial setup
+    buildAnimation();
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      ScrollTrigger.removeEventListener('refresh', buildAnimation);
+    };
   });
+
+  const getSizesForImage = (classes: string) => {
+    const mobileSpanMatch = classes.match(/col-span-(\d+)/);
+    const desktopSpanMatch = classes.match(/sm:col-span-(\d+)/);
+
+    const mobileSpan = mobileSpanMatch ? parseInt(mobileSpanMatch[1], 10) : 1;
+    const desktopSpan = desktopSpanMatch
+      ? parseInt(desktopSpanMatch[1], 10)
+      : mobileSpan;
+
+    const mobileSize = Math.ceil((mobileSpan / 4) * 100);
+    const desktopSize = Math.ceil((desktopSpan / 13) * 100);
+
+    return `(max-width: 639px) ${mobileSize}vw, ${desktopSize}vw`;
+  };
 
   return (
     <section className="fade-bg overflow-hidden">
@@ -170,6 +199,7 @@ export default function ImageGallery() {
                 src={image.src}
                 alt={image.alt}
                 fill
+                sizes={getSizesForImage(image.cellClasses)}
                 className="rounded-md object-cover"
               />
 

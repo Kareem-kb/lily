@@ -10,6 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function AboutUs() {
   const aboutSectionRef = useRef<HTMLDivElement>(null);
+  const aboutTextRef = useRef<HTMLParagraphElement>(null);
 
   useGSAP(
     () => {
@@ -44,7 +45,7 @@ export default function AboutUs() {
       <div className="mx-auto grid min-h-full w-full items-center gap-6">
         <h2 className="section-title h-fit self-end">OUR STORY</h2>
         <div className="grid h-fit w-full grid-cols-1 place-items-center gap-8 md:grid-cols-[1.5fr_1fr]">
-          <p className="about-text text-p">
+          <p className="about-text text-p" ref={aboutTextRef}>
             What began as a passion in a cozy home kitchen has blossomed, with
             over six years of experience, into a celebrated art form. We have
             since had the privilege of sweetening more than 100 unique
