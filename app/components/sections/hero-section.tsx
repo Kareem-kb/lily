@@ -74,7 +74,7 @@ export default function Hero() {
 
   return (
     <div className="hero-section min-h-screen">
-      <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col justify-end gap-6 px-4 sm:flex-row sm:px-6">
+      <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col justify-center gap-6 px-4 pt-16 sm:flex-row sm:justify-end sm:px-6 sm:pt-0">
         <div className="flex flex-col justify-center gap-4 text-[90%] sm:basis-1/2 sm:text-base">
           <h1 className="hero-title heading-section" ref={titleRef}>
             <span className="block sm:inline">Cakes That Make</span>

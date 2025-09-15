@@ -118,7 +118,7 @@ export function FileUpload({
     <label className="flex flex-col gap-1 p-2">
       <span className="text-xs font-medium">{label}</span>
       <div
-        className={`flex w-full flex-col gap-2 rounded-lg border-2 border-dashed border-gray-300 p-3 transition-all duration-700 ${preview ? 'mt-6' : ''} ${disabled ? 'cursor-not-allowed bg-gray-100' : ''}`}
+        className={`flex w-full max-w-full flex-col gap-2 rounded-lg border-2 border-dashed border-gray-300 p-3 transition-all duration-700 ${preview ? 'mt-6' : ''} ${disabled ? 'cursor-not-allowed bg-gray-100' : ''}`}
       >
         <input
           ref={inputRef}
@@ -135,7 +135,7 @@ export function FileUpload({
             key={`${file.name}-${file.size}-${file.lastModified}`}
             className="flex items-center justify-between rounded bg-gray-50 px-3 py-2"
           >
-            <span className="flex-1 truncate text-sm font-medium text-gray-700">
+            <span className="max-w-[200px] truncate text-sm font-medium text-gray-700">
               {file.name}
             </span>
             <button
