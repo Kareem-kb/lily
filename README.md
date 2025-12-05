@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🍰 Lily Cakes – Homemade Cake Experience
 
-## Getting Started
+A modern, animated marketing website for a bespoke homemade cake business. Built to showcase artisan craftsmanship through elegant design and smooth motion.
 
-First, run the development server:
+## ✨ The Idea
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
+Transform personal celebrations into beautifully designed desserts. This site bridges creativity and connection—letting clients share their vision while giving the baker everything needed to craft the perfect cake.
+
+**Three core principles:**
+- Personal storytelling that feels warm and handcrafted
+- Visual creativity through expressive animations
+- Seamless client-to-baker communication flow
+
+## 📋 Client Request Flow
+
+The inquiry form captures everything the baker needs:
+- Occasion, style, flavors, budget, and date
+- Inspiration photos and special requests
+
+**The workflow:** Client fills out the form → Admin receives complete brief via email → Follow-up with personalized quote
+
+No context lost. No back-and-forth. Just a smooth path from inquiry to order.
+
+## 🎨 Creative & Technical
+
+Built with **Next.js** for performance and SEO, keeping the stack clean and maintainable for a growing small business.
+
+**Stack highlights:**
+- Next.js App Router
+- Responsive, mobile-first UI
+- Modular components ready for expansion (gallery, blog, FAQ)
+
+## 🎬 GSAP Animation Experiments
+
+Motion is central to the brand identity. This project serves as an active playground for **GSAP animation techniques:**
+- Subtle entrance animations that guide attention
+- Scroll-based effects for storytelling depth
+- Refined timing and easing to mirror the artistry of custom cakes
+
+Animations stay balanced—enhancing the experience without overwhelming the message.
+
+## 🚀 Future Plans
+
+- Dynamic order gallery with filtering
+- Admin dashboard for inquiry tracking
+- Client portal for order updates
+- Seasonal animation campaigns
+
+## 💻 Getting Started
+
+pnpm install
 pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**A digital experience as thoughtful as the cakes themselves.**
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
